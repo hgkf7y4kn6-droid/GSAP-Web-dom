@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-body {
-  @apply bg-black text-white;
-}
-
 @utility flex-center {
-  @apply flex items-center justify-center;
+  @apply flex justify-center items-center;
 }
