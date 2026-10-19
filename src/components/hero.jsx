@@ -1,8 +1,14 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/all";
+import { useRef } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const Hero = () => {
+  const videoRef = useRef();
+
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
   useGSAP(() => {
     const heroSplit = new SplitText(".title", { type: "chars, words" });
   }, []);
@@ -35,17 +41,18 @@ const Hero = () => {
           <source src="/videos/paper-ui.webm" type="video/webm" />
         </video>
 
-        <video
-          aria-label="hero animation"
-          className="hero-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="/videos/hero.mp4" type="video/mp4" />
-          <source src="/videos/hero.webm" type="video/webm" />
-        </video>
+        <div className="video absolute inset-0">
+          <video
+            ref={videoRef}
+            aria-label="hero animation"
+            muted
+            playsInline
+            preload="auto"
+          >
+            <source src="/videos/hero.mp4" type="video/mp4" />
+            <source src="/videos/hero.webm" type="video/webm" />
+          </video>
+        </div>
 
         <div className="body">
           <div className="content">

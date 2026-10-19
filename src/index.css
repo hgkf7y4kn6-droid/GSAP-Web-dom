@@ -24,8 +24,12 @@
     @apply absolute top-[60%] right-0 w-28 rotate-6 rounded-lg shadow-xl md:top-[32%] md:w-44 xl:w-52;
   }
 
-  .hero-video {
-    @apply absolute top-[37%] left-1/2 w-[85%] -translate-x-1/2 rounded-xl shadow-2xl md:top-[34%] md:w-[50vw] lg:w-[38vw];
+  .video {
+    @apply pointer-events-none;
+
+    video {
+      @apply absolute top-[37%] left-1/2 aspect-video w-[85%] -translate-x-1/2 rounded-xl object-cover object-bottom shadow-2xl md:top-[34%] md:w-[50vw] lg:w-[38vw];
+    }
   }
 
   .body {
