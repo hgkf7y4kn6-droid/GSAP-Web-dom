@@ -24,14 +24,6 @@
     @apply absolute top-[60%] right-0 w-28 rotate-6 rounded-lg shadow-xl md:top-[32%] md:w-44 xl:w-52;
   }
 
-  .video {
-    @apply pointer-events-none;
-
-    video {
-      @apply absolute top-[37%] left-1/2 aspect-video w-[85%] -translate-x-1/2 rounded-xl object-cover object-bottom shadow-2xl md:top-[34%] md:w-[50vw] lg:w-[38vw];
-    }
-  }
-
   .body {
     @apply absolute bottom-12 left-1/2 container mx-auto flex -translate-x-1/2 items-end justify-between px-5 lg:bottom-20;
 
@@ -54,5 +46,13 @@
         @apply font-semibold opacity-80 hover:text-indigo-500;
       }
     }
+  }
+}
+
+#hero + .video {
+  @apply pointer-events-none;
+
+  video {
+    @apply absolute inset-x-0 top-[37%] mx-auto aspect-video w-[85%] rounded-xl object-cover object-bottom shadow-2xl md:top-[34%] md:w-[50vw] lg:w-[38vw];
   }
 }
