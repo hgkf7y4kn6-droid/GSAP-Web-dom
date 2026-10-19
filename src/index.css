@@ -78,7 +78,7 @@ body {
   @apply pointer-events-none;
 
   video {
-    @apply absolute inset-x-0 bottom-[22%] mx-auto aspect-video w-full object-cover object-bottom md:bottom-0 md:w-[64vw] lg:w-[56vw];
+    @apply absolute inset-x-0 bottom-[22%] mx-auto aspect-video w-full object-cover object-bottom md:bottom-[30%] md:w-[64vw] lg:bottom-0 lg:w-[56vw];
     mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
   }
 }

@@ -26,7 +26,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 z-50 w-full">
-      <div className="container mx-auto flex flex-col items-center gap-5 px-5 py-5 md:flex-row md:justify-between lg:px-0">
+      <div className="container mx-auto flex flex-col items-center gap-5 px-5 py-5 md:flex-row md:justify-between">
         <a href="#home" className="flex items-center gap-2">
           <img src="/logo.png" alt="logo" className="size-8" />
           <p>Riches Digital Ventures</p>

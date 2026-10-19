@@ -125,9 +125,9 @@ const Hero = () => {
         <div className="body">
           <div className="content">
             <div className="hidden space-y-5 md:block">
-              <p>Cool. Crisp. Classic.</p>
+              <p>Move faster. Build smarter. Design bolder.</p>
               <p className="subtitle">
-                Sip the Spirit <br /> of Summer
+                Applied <br /> Agentic AI
               </p>
             </div>
 
