@@ -1,7 +1,22 @@
 @import "tailwindcss";
+@import "@fontsource/dm-serif-display";
+
+@theme {
+  --font-display: "DM Serif Display", serif;
+}
 
 @utility flex-center {
   @apply flex justify-center items-center;
+}
+
+@utility text-gradient {
+  background: linear-gradient(to bottom, #ffffff, #898989);
+  background-clip: text;
+  color: transparent;
+}
+
+body {
+  @apply bg-black text-white;
 }
 
 .noisy {
@@ -13,37 +28,47 @@
   @apply relative z-10 min-h-dvh w-full overflow-hidden;
 
   .title {
-    @apply mt-36 px-5 text-center text-5xl leading-none font-extrabold tracking-tight md:mt-32 md:text-[7vw];
+    @apply font-display mt-36 px-5 text-center text-6xl leading-none md:mt-28 md:text-[7vw];
+  }
+
+  .left-paper-ui,
+  .right-paper-ui {
+    @apply absolute;
+    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 45%, transparent 100%);
   }
 
   .left-paper-ui {
-    @apply absolute top-[60%] left-0 w-28 -rotate-6 rounded-lg shadow-xl md:top-[42%] md:w-44 xl:w-52;
+    @apply top-[40%] -left-4 w-28 -rotate-12 md:top-[36%] md:-left-10 md:w-60 xl:w-72;
   }
 
   .right-paper-ui {
-    @apply absolute top-[60%] right-0 w-28 rotate-6 rounded-lg shadow-xl md:top-[32%] md:w-44 xl:w-52;
+    @apply top-[37%] -right-4 w-28 rotate-12 md:top-[3%] md:-right-12 md:w-48 xl:w-56;
+  }
+
+  .arrow {
+    @apply absolute top-[30%] right-[8%] hidden h-28 w-4 text-white/80 md:block;
   }
 
   .body {
-    @apply absolute bottom-12 left-1/2 container mx-auto flex -translate-x-1/2 items-end justify-between px-5 lg:bottom-20;
+    @apply absolute bottom-10 left-1/2 container mx-auto flex -translate-x-1/2 items-end justify-between px-5 lg:bottom-16;
 
     .content {
-      @apply mx-auto flex w-full flex-col items-center justify-between gap-10 lg:flex-row lg:items-end;
+      @apply mx-auto flex w-full flex-col items-center justify-between gap-10 md:flex-row md:items-end;
     }
 
     .subtitle {
-      @apply text-4xl font-bold text-indigo-500;
+      @apply font-display text-4xl leading-tight lg:text-5xl;
     }
 
     .view-cocktails {
-      @apply w-full space-y-5 text-lg md:max-w-xs lg:max-w-2xs;
+      @apply w-full space-y-5 text-base md:max-w-xs lg:max-w-2xs;
 
       .subtitle {
-        @apply text-lg font-normal text-current;
+        @apply font-sans text-base leading-relaxed text-white/80;
       }
 
       a {
-        @apply font-semibold opacity-80 hover:text-indigo-500;
+        @apply font-semibold underline-offset-4 hover:underline;
       }
     }
   }
@@ -53,6 +78,7 @@
   @apply pointer-events-none;
 
   video {
-    @apply absolute inset-x-0 top-[37%] mx-auto aspect-video w-[85%] rounded-xl object-cover object-bottom shadow-2xl md:top-[34%] md:w-[50vw] lg:w-[38vw];
+    @apply absolute inset-x-0 bottom-[22%] mx-auto aspect-video w-full object-cover object-bottom md:bottom-0 md:w-[64vw] lg:w-[56vw];
+    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
   }
 }

@@ -13,6 +13,8 @@ const Hero = () => {
     const heroSplit = new SplitText(".title", { type: "chars, words" });
     const paragraphSplit = new SplitText(".subtitle", { type: "lines" });
 
+    heroSplit.chars.forEach((char) => char.classList.add("text-gradient"));
+
     gsap.from(heroSplit.chars, {
       yPercent: 100,
       opacity: 0,
@@ -109,6 +111,17 @@ const Hero = () => {
           <source src="/videos/paper-ui.webm" type="video/webm" />
         </video>
 
+        <svg
+          className="arrow"
+          viewBox="0 0 16 112"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          aria-hidden="true"
+        >
+          <path d="M8 0v110M1 103l7 7 7-7" />
+        </svg>
+
         <div className="body">
           <div className="content">
             <div className="hidden space-y-5 md:block">
@@ -130,7 +143,7 @@ const Hero = () => {
         </div>
       </section>
 
-      <div className="video absolute inset-0 z-20">
+      <div className="video absolute inset-0">
         <video
           ref={videoRef}
           aria-label="hero animation"
