@@ -3,3 +3,48 @@
 @utility flex-center {
   @apply flex justify-center items-center;
 }
+
+.noisy {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+#hero {
+  @apply relative z-10 min-h-dvh w-full overflow-hidden;
+
+  .title {
+    @apply mt-40 text-center text-7xl leading-none font-extrabold tracking-tight md:mt-32 md:text-[12vw];
+  }
+
+  .left-paper-ui {
+    @apply absolute top-[48%] left-0 w-28 -rotate-6 rounded-lg shadow-xl md:top-[42%] md:w-44 xl:w-52;
+  }
+
+  .right-paper-ui {
+    @apply absolute top-[38%] right-0 w-24 rotate-6 rounded-lg shadow-xl md:top-[32%] md:w-32 xl:w-40;
+  }
+
+  .body {
+    @apply absolute bottom-12 left-1/2 container mx-auto flex -translate-x-1/2 items-end justify-between px-5 lg:bottom-20;
+
+    .content {
+      @apply mx-auto flex w-full flex-col items-center justify-between gap-10 lg:flex-row lg:items-end;
+    }
+
+    .subtitle {
+      @apply text-4xl font-bold text-indigo-500;
+    }
+
+    .view-cocktails {
+      @apply w-full space-y-5 text-lg md:max-w-xs lg:max-w-2xs;
+
+      .subtitle {
+        @apply text-lg font-normal text-current;
+      }
+
+      a {
+        @apply font-semibold opacity-80 hover:text-indigo-500;
+      }
+    }
+  }
+}
