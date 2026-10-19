@@ -10,18 +10,42 @@ const Hero = () => {
   return (
     <>
       <section id="hero" className="noisy">
-        <h1 className="title">Software Dev</h1>
+        <h1 className="title">Riches Digital Ventures</h1>
 
-        <img
-          src="/images/hero-left-paper-ui.png"
-          alt="left paper ui"
+        <video
+          aria-label="left paper ui"
           className="left-paper-ui"
-        />
-        <img
-          src="/images/hero-right-paper-ui.png"
-          alt="right paper ui"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/videos/paper-ui.mp4" type="video/mp4" />
+          <source src="/videos/paper-ui.webm" type="video/webm" />
+        </video>
+        <video
+          aria-label="right paper ui"
           className="right-paper-ui"
-        />
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/videos/paper-ui.mp4" type="video/mp4" />
+          <source src="/videos/paper-ui.webm" type="video/webm" />
+        </video>
+
+        <video
+          aria-label="hero animation"
+          className="hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+          <source src="/videos/hero.webm" type="video/webm" />
+        </video>
 
         <div className="body">
           <div className="content">
