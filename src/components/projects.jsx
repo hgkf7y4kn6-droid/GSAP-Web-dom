@@ -1,4 +1,4 @@
-import { projectLists } from "../../constants/index.js";
+import { lovedProjects, projectLists } from "../../constants/index.js";
 
 const Projects = () => {
   return (
@@ -20,6 +20,25 @@ const Projects = () => {
 
           <ul>
             {projectLists.map(({ name, summary, url }) => (
+              <li key={name}>
+                <div className="md:me-28">
+                  <h3>{name}</h3>
+                  <p>{summary}</p>
+                </div>
+                <span className="line" aria-hidden="true" />
+                <a href={url} target="_blank" rel="noopener noreferrer">
+                  View repo ↗
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="loved">
+          <h2>Most loved projects:</h2>
+
+          <ul>
+            {lovedProjects.map(({ name, summary, url }) => (
               <li key={name}>
                 <div className="md:me-28">
                   <h3>{name}</h3>

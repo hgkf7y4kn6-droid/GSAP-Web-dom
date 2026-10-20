@@ -36,4 +36,25 @@ const projectLists = [
   },
 ];
 
-export { navLinks, projectLists };
+const lovedProjects = [
+  {
+    name: "DFS Riches",
+    summary:
+      "DraftKings NFL explorer that merges real salaries with Sleeper projections and builds Showdown and Classic slates. Python and FastAPI, with a mobile app.",
+    url: "https://github.com/hgkf7y4kn6-droid/DFS-Riches",
+  },
+  {
+    name: "Cost Comparison Tool",
+    summary:
+      "Good / better / best product matching that compares options on cost per use. FastAPI with CLIP, FAISS and OCR, deployed on Render and Cloudflare.",
+    url: "https://github.com/hgkf7y4kn6-droid/Cost-Comparison-Tool",
+  },
+  {
+    name: "Mindful Money Management",
+    summary:
+      "Personal finance app for tracking subscriptions and spending insights. Expo / React Native with a FastAPI backend that connects bank accounts through Plaid.",
+    url: "https://github.com/hgkf7y4kn6-droid/MMM",
+  },
+];
+
+export { navLinks, projectLists, lovedProjects };

@@ -84,7 +84,7 @@ body {
   }
 
   #lsp {
-    @apply -bottom-10 -left-6 -rotate-12 lg:-right-8 lg:-bottom-24 lg:left-auto lg:w-40;
+    @apply -bottom-10 -left-6 -rotate-12 lg:w-40;
   }
 
   #rsp {
@@ -95,7 +95,13 @@ body {
     @apply relative z-10 container mx-auto flex flex-col items-start justify-between gap-20 px-5 lg:flex-row;
   }
 
-  .popular {
+  /* On desktop the second list sits on the right, below where the hero video lands. */
+  .loved {
+    @apply lg:mt-[62vh];
+  }
+
+  .popular,
+  .loved {
     @apply w-full lg:max-w-xl;
 
     h2 {
