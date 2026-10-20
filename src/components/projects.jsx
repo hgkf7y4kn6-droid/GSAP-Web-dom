@@ -19,14 +19,14 @@ const Projects = () => {
           <h2>Most popular projects:</h2>
 
           <ul>
-            {projectLists.map((project) => (
-              <li key={project.name}>
+            {projectLists.map(({ name, summary, url }) => (
+              <li key={name}>
                 <div className="md:me-28">
-                  <h3>{project.name}</h3>
-                  <p>{project.summary}</p>
+                  <h3>{name}</h3>
+                  <p>{summary}</p>
                 </div>
                 <span className="line" aria-hidden="true" />
-                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                <a href={url} target="_blank" rel="noopener noreferrer">
                   View repo ↗
                 </a>
               </li>
