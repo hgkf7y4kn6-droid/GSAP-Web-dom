@@ -8,7 +8,6 @@ const Hero = () => {
   const videoRef = useRef();
 
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const isDesktop = useMediaQuery({ minWidth: 1024 });
 
   useGSAP(() => {
     const heroSplit = new SplitText(".title", { type: "chars, words" });
@@ -72,17 +71,9 @@ const Hero = () => {
         },
       });
 
-      // Scrub the video from its first to its last frame as the user scrolls,
-      // shrinking the computer slightly as it settles into the next section.
-      // On desktop it also drifts right, clearing the left column for the
-      // project list.
+      // Scrub the video from its first to its last frame as the user scrolls.
       const animateVideo = () => {
-        tl.to(video, {
-          currentTime: video.duration,
-          scale: 0.8,
-          x: isDesktop ? "20vw" : 0,
-          ease: "none",
-        });
+        tl.to(video, { currentTime: video.duration, ease: "none" });
       };
 
       if (video.readyState >= 1) {
@@ -102,7 +93,7 @@ const Hero = () => {
 
       return () => video.removeEventListener("loadedmetadata", animateVideo);
     },
-    { dependencies: [isMobile, isDesktop], revertOnUpdate: true },
+    { dependencies: [isMobile], revertOnUpdate: true },
   );
 
   return (

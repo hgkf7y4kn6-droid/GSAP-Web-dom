@@ -38,11 +38,11 @@ body {
   }
 
   .left-paper-ui {
-    @apply top-[40%] -left-4 w-28 -rotate-12 md:top-[36%] md:-left-10 md:w-60 xl:w-72;
+    @apply top-[17%] -left-6 w-24 -rotate-12 md:top-[16%] lg:top-[36%] md:-left-10 md:w-60 xl:w-72;
   }
 
   .right-paper-ui {
-    @apply top-[37%] -right-4 w-28 rotate-12 md:top-[3%] md:-right-12 md:w-48 xl:w-56;
+    @apply top-[21%] -right-6 w-24 rotate-12 md:top-[3%] md:-right-12 md:w-48 xl:w-56;
   }
 
   .arrow {
@@ -75,7 +75,7 @@ body {
 }
 
 #projects {
-  @apply relative min-h-dvh w-full overflow-hidden pt-[72vh] pb-40 md:pb-72 lg:pt-[20vh] lg:pb-16;
+  @apply relative min-h-dvh w-full overflow-hidden pt-[92vh] pb-40 md:pt-[80vh] md:pb-72 lg:pt-[92vh] lg:pb-40;
 
   #lsp,
   #rsp {
@@ -93,11 +93,6 @@ body {
 
   .list {
     @apply relative z-10 container mx-auto flex flex-col items-start justify-between gap-20 px-5 lg:flex-row;
-  }
-
-  /* On desktop the second list sits on the right, below where the hero video lands. */
-  .loved {
-    @apply lg:mt-[62vh];
   }
 
   .popular,
@@ -138,7 +133,7 @@ body {
   @apply pointer-events-none;
 
   video {
-    @apply absolute inset-x-0 bottom-[22%] mx-auto aspect-video w-full object-cover object-bottom md:bottom-[30%] md:w-[64vw] lg:bottom-0 lg:w-[56vw];
+    @apply absolute inset-x-0 top-[36%] h-[38vh] w-full object-cover md:top-[31%] md:left-[5vw] md:h-auto md:w-[90vw] md:aspect-video lg:top-[28%] lg:left-[calc(50vw-min(35vw,55vh))] lg:w-[min(70vw,110vh)];
     mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
   }
 }
