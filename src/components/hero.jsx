@@ -39,7 +39,7 @@ const Hero = () => {
       // clamp() keeps the start from landing above the top of the page, so the
       // pinned video doesn't jump away from where the layout puts it.
       const startValue = isMobile ? "clamp(top 50%)" : "clamp(center 60%)";
-      const endValue = isMobile ? "120% top" : "bottom top";
+      const endValue = "top top";
 
       // On mobile the right paper sits just above the paragraph, so both
       // papers drift up there instead of the right one moving down into it.
@@ -57,25 +57,43 @@ const Hero = () => {
 
       const video = videoRef.current;
 
+      // Pin the video while it plays through the rest of the hero, and release
+      // it once the projects section reaches the top of the screen so the
+      // animation finishes inside that section.
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: video,
           start: startValue,
+          endTrigger: "#projects",
           end: endValue,
           scrub: true,
           pin: true,
         },
       });
 
-      // Scrub the video from its first to its last frame as the user scrolls.
+      // Scrub the video from its first to its last frame as the user scrolls,
+      // shrinking the computer slightly as it settles into the next section.
       const animateVideo = () => {
-        tl.to(video, { currentTime: video.duration, ease: "none" });
+        tl.to(video, {
+          currentTime: video.duration,
+          scale: 0.8,
+          ease: "none",
+        });
       };
 
       if (video.readyState >= 1) {
         animateVideo();
       } else {
         video.addEventListener("loadedmetadata", animateVideo, { once: true });
+        // iOS Safari won't load a video until it has played, so start and
+        // immediately pause it (it's muted, so this is allowed without a tap).
+        video
+          .play()
+          .then(() => {
+            video.pause();
+            video.currentTime = 0;
+          })
+          .catch(() => {});
       }
 
       return () => video.removeEventListener("loadedmetadata", animateVideo);

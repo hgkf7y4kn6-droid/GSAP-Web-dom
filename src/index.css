@@ -74,6 +74,14 @@ body {
   }
 }
 
+#projects {
+  @apply relative min-h-dvh w-full;
+
+  .title {
+    @apply font-display text-gradient pt-28 text-center text-5xl md:text-7xl;
+  }
+}
+
 #hero + .video {
   @apply pointer-events-none;
 
