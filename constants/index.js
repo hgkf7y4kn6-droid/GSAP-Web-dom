@@ -11,12 +11,6 @@ const navLinks = [
 
 const projectLists = [
   {
-    name: "Misadventures of Havoc and Chaos",
-    summary:
-      "Real-time multiplayer storytelling game for 2–12 players, narrated by AI. FastAPI and WebSockets backend with a React front end.",
-    url: "https://github.com/hgkf7y4kn6-droid/Misadventures-of-Havoc-and-Chaos",
-  },
-  {
     name: "Pool PM",
     summary:
       "Offline-first project management for pool builders, from lead to warranty. Expo / React Native app with a Fastify, PostgreSQL and Redis API.",
