@@ -15,6 +15,11 @@
   color: transparent;
 }
 
+/* Keep section headings clear of the fixed navbar, which is two rows tall on phones. */
+html {
+  @apply scroll-pt-16 md:scroll-pt-0;
+}
+
 body {
   @apply bg-black text-white;
 }
@@ -125,6 +130,50 @@ body {
 
     a {
       @apply mt-1.5 shrink-0 text-sm font-semibold whitespace-nowrap hover:underline;
+    }
+  }
+}
+
+#about {
+  @apply relative w-full border-t border-white/10 py-28 md:py-36;
+
+  .intro {
+    @apply lg:sticky lg:top-32 lg:self-start;
+  }
+
+  .eyebrow {
+    @apply text-sm tracking-widest text-white/60 uppercase;
+  }
+
+  h2 {
+    @apply font-display text-gradient mt-4 text-4xl leading-tight md:text-5xl;
+  }
+
+  .highlights {
+    @apply mt-10 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-white/10 pt-8;
+
+    dt {
+      @apply font-display text-2xl text-white md:text-3xl;
+    }
+
+    dd {
+      @apply mt-1 text-sm leading-snug text-white/60;
+    }
+  }
+
+  .bio {
+    @apply max-w-2xl space-y-6 text-base leading-relaxed text-white/75 md:text-lg md:leading-relaxed;
+
+    .lead {
+      @apply font-display text-2xl leading-snug text-white md:text-3xl md:leading-snug;
+    }
+
+    .closing {
+      @apply border-t border-white/10 pt-6;
+
+      a {
+        @apply font-display text-xl text-white underline decoration-white/30 underline-offset-8 transition-colors hover:decoration-white md:text-2xl;
+      }
     }
   }
 }
