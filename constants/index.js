@@ -38,8 +38,9 @@ const lovedProjects = [
   {
     name: "Riches Analytics",
     summary:
-      "Live sports analytics site that runs Monte Carlo simulations on NFL and college football games, alongside real DraftKings salaries and Sleeper projections. Python and FastAPI.",
-    url: "https://github.com/hgkf7y4kn6-droid/DFS-Riches",
+      "Live sports analytics site that runs Monte Carlo simulations on NFL games, alongside real DraftKings salaries and Sleeper projections. Python and FastAPI.",
+    url: "https://dfsriches.richesdigitalventures.com",
+    linkLabel: "Visit site",
   },
   {
     name: "Cost Comparison Tool",

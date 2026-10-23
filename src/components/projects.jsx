@@ -19,7 +19,7 @@ const Projects = () => {
           <h2>Most popular projects:</h2>
 
           <ul>
-            {projectLists.map(({ name, summary, url }) => (
+            {projectLists.map(({ name, summary, url, linkLabel = "View repo" }) => (
               <li key={name}>
                 <div className="md:me-28">
                   <h3>{name}</h3>
@@ -27,7 +27,7 @@ const Projects = () => {
                 </div>
                 <span className="line" aria-hidden="true" />
                 <a href={url} target="_blank" rel="noopener noreferrer">
-                  View repo ↗
+                  {linkLabel} ↗
                 </a>
               </li>
             ))}
@@ -38,7 +38,7 @@ const Projects = () => {
           <h2>Most loved projects:</h2>
 
           <ul>
-            {lovedProjects.map(({ name, summary, url }) => (
+            {lovedProjects.map(({ name, summary, url, linkLabel = "View repo" }) => (
               <li key={name}>
                 <div className="md:me-28">
                   <h3>{name}</h3>
@@ -46,7 +46,7 @@ const Projects = () => {
                 </div>
                 <span className="line" aria-hidden="true" />
                 <a href={url} target="_blank" rel="noopener noreferrer">
-                  View repo ↗
+                  {linkLabel} ↗
                 </a>
               </li>
             ))}
