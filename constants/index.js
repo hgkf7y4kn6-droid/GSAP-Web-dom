@@ -22,10 +22,10 @@ const projectLists = [
     linkLabel: "Visit site",
   },
   {
-    name: "Pool PM",
+    name: "Mindful Money Management",
     summary:
-      "Offline-first project management for pool builders, from lead to warranty. Expo / React Native app with a Fastify, PostgreSQL and Redis API.",
-    url: "https://github.com/hgkf7y4kn6-droid/Pool-Project-Workflow",
+      "Personal finance app for tracking subscriptions and spending insights. Expo / React Native with a FastAPI backend that connects bank accounts through Plaid.",
+    url: "https://github.com/hgkf7y4kn6-droid/MMM",
   },
   {
     name: "Healthcare Agent",
@@ -43,10 +43,10 @@ const lovedProjects = [
     url: "https://github.com/hgkf7y4kn6-droid/Cost-Comparison-Tool",
   },
   {
-    name: "Mindful Money Management",
+    name: "Pool PM",
     summary:
-      "Personal finance app for tracking subscriptions and spending insights. Expo / React Native with a FastAPI backend that connects bank accounts through Plaid.",
-    url: "https://github.com/hgkf7y4kn6-droid/MMM",
+      "Offline-first project management for pool builders, from lead to warranty. Expo / React Native app with a Fastify, PostgreSQL and Redis API.",
+    url: "https://github.com/hgkf7y4kn6-droid/Pool-Project-Workflow",
   },
   {
     name: "News Agent",
