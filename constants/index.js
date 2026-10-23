@@ -15,6 +15,13 @@ const navLinks = [
 
 const projectLists = [
   {
+    name: "Riches Analytics",
+    summary:
+      "Live sports analytics site that runs Monte Carlo simulations on NFL games, alongside real DraftKings salaries and Sleeper projections. Python and FastAPI.",
+    url: "https://dfsriches.richesdigitalventures.com",
+    linkLabel: "Visit site",
+  },
+  {
     name: "Pool PM",
     summary:
       "Offline-first project management for pool builders, from lead to warranty. Expo / React Native app with a Fastify, PostgreSQL and Redis API.",
@@ -35,13 +42,6 @@ const projectLists = [
 ];
 
 const lovedProjects = [
-  {
-    name: "Riches Analytics",
-    summary:
-      "Live sports analytics site that runs Monte Carlo simulations on NFL games, alongside real DraftKings salaries and Sleeper projections. Python and FastAPI.",
-    url: "https://dfsriches.richesdigitalventures.com",
-    linkLabel: "Visit site",
-  },
   {
     name: "Cost Comparison Tool",
     summary:
