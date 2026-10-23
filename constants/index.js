@@ -7,6 +7,10 @@ const navLinks = [
     id: "about",
     title: "About Us",
   },
+  {
+    id: "contact",
+    title: "Contact",
+  },
 ];
 
 const projectLists = [
@@ -51,4 +55,15 @@ const lovedProjects = [
   },
 ];
 
-export { navLinks, projectLists, lovedProjects };
+const contactLinks = [
+  {
+    label: "Connect on LinkedIn",
+    url: "https://www.linkedin.com/in/leonard-riches-529a79b4",
+  },
+  {
+    label: "Book a call",
+    url: "https://calendar.app.google/sqYnXARceSy6WBHo6",
+  },
+];
+
+export { navLinks, projectLists, lovedProjects, contactLinks };

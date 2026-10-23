@@ -129,6 +129,42 @@ body {
   }
 }
 
+#contact {
+  @apply relative flex min-h-[80dvh] w-full flex-col justify-between px-5 pt-32 pb-8;
+
+  .content {
+    @apply mx-auto flex max-w-2xl flex-col items-center text-center;
+  }
+
+  .eyebrow {
+    @apply text-sm tracking-widest text-white/60 uppercase;
+  }
+
+  h2 {
+    @apply font-display text-gradient mt-4 text-5xl leading-tight md:text-7xl;
+  }
+
+  .lead {
+    @apply mt-6 leading-relaxed text-white/70 md:text-lg;
+  }
+
+  .links {
+    @apply mt-10 flex w-full flex-col gap-4 sm:w-auto sm:flex-row;
+
+    a {
+      @apply rounded-full border border-white/30 px-7 py-3 font-semibold transition-colors hover:border-white hover:bg-white hover:text-black;
+    }
+
+    a:last-child {
+      @apply border-white bg-white text-black hover:bg-transparent hover:text-white;
+    }
+  }
+
+  footer {
+    @apply mt-24 text-center text-sm text-white/40;
+  }
+}
+
 #hero + .video {
   @apply pointer-events-none;
 
