@@ -33,12 +33,6 @@ const projectLists = [
       "Multi-agent healthcare assistant that handles prescription refills, EHR lookups, scheduling and support tickets. Python, CrewAI and a webhook API.",
     url: "https://github.com/hgkf7y4kn6-droid/Capstone-Healthcare-Agent",
   },
-  {
-    name: "News Agent",
-    summary:
-      "Personal news reader across 62 sources with an AI chat assistant that answers with citations. Cloudflare Workers, Vectorize and Gemini.",
-    url: "https://github.com/hgkf7y4kn6-droid/news-agent",
-  },
 ];
 
 const lovedProjects = [
@@ -53,6 +47,12 @@ const lovedProjects = [
     summary:
       "Personal finance app for tracking subscriptions and spending insights. Expo / React Native with a FastAPI backend that connects bank accounts through Plaid.",
     url: "https://github.com/hgkf7y4kn6-droid/MMM",
+  },
+  {
+    name: "News Agent",
+    summary:
+      "Personal news reader across 62 sources with an AI chat assistant that answers with citations. Cloudflare Workers, Vectorize and Gemini.",
+    url: "https://github.com/hgkf7y4kn6-droid/news-agent",
   },
 ];
 

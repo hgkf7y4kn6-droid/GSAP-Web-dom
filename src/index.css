@@ -97,7 +97,7 @@ body {
   }
 
   .list {
-    @apply relative z-10 container mx-auto flex flex-col items-start justify-between gap-20 px-5 lg:flex-row;
+    @apply relative z-10 container mx-auto flex flex-col items-start justify-between gap-12 px-5 lg:flex-row lg:gap-24;
   }
 
   .popular,
@@ -105,15 +105,19 @@ body {
     @apply w-full lg:max-w-xl;
 
     h2 {
-      @apply text-lg font-medium text-white/80;
+      @apply text-sm tracking-widest text-white/60 uppercase;
     }
 
     ul {
-      @apply mt-8 space-y-8;
+      @apply mt-8;
     }
 
     li {
-      @apply flex items-start gap-4;
+      @apply flex flex-col items-start gap-4 border-t border-white/10 py-8 md:flex-row md:gap-6;
+    }
+
+    .details {
+      @apply min-w-0 flex-1;
     }
 
     h3 {
@@ -121,16 +125,21 @@ body {
     }
 
     p {
-      @apply mt-1 text-sm leading-relaxed text-white/70;
+      @apply mt-3 text-sm leading-relaxed text-white/70 md:text-base md:leading-relaxed;
     }
 
     .line {
-      @apply mt-4 hidden h-px w-10 shrink-0 bg-white/40 md:block;
+      @apply mt-4 hidden h-px w-8 shrink-0 bg-white/40 md:block;
     }
 
     a {
-      @apply mt-1.5 shrink-0 text-sm font-semibold whitespace-nowrap hover:underline;
+      @apply shrink-0 text-sm font-semibold whitespace-nowrap hover:underline md:mt-1.5;
     }
+  }
+
+  /* Stagger the second list so the two columns read as a zig-zag. */
+  .loved {
+    @apply lg:mt-40;
   }
 }
 

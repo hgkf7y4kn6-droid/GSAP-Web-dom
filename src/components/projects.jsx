@@ -21,7 +21,7 @@ const Projects = () => {
           <ul>
             {projectLists.map(({ name, summary, url, linkLabel = "View repo" }) => (
               <li key={name}>
-                <div className="md:me-28">
+                <div className="details">
                   <h3>{name}</h3>
                   <p>{summary}</p>
                 </div>
@@ -40,7 +40,7 @@ const Projects = () => {
           <ul>
             {lovedProjects.map(({ name, summary, url, linkLabel = "View repo" }) => (
               <li key={name}>
-                <div className="md:me-28">
+                <div className="details">
                   <h3>{name}</h3>
                   <p>{summary}</p>
                 </div>
