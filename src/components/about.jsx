@@ -11,8 +11,7 @@ const About = () => {
     <section id="about" className="noisy">
       <div className="container mx-auto grid gap-12 px-5 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
         <aside className="intro">
-          <p className="eyebrow">About Me</p>
-          <h2>From the sales floor to shipping software</h2>
+          <h2>About Me</h2>
 
           <dl className="highlights">
             {aboutHighlights.map(({ value, label }) => (

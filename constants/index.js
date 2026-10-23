@@ -36,9 +36,9 @@ const projectLists = [
 
 const lovedProjects = [
   {
-    name: "DFS Riches",
+    name: "Riches Analytics",
     summary:
-      "DraftKings NFL explorer that merges real salaries with Sleeper projections and builds Showdown and Classic slates. Python and FastAPI, with a mobile app.",
+      "Live sports analytics site that runs Monte Carlo simulations on NFL and college football games, alongside real DraftKings salaries and Sleeper projections. Python and FastAPI.",
     url: "https://github.com/hgkf7y4kn6-droid/DFS-Riches",
   },
   {
