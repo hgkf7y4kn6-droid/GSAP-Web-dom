@@ -170,7 +170,7 @@ nav {
   }
 
   .card {
-    @apply bg-ink/85 w-[88%] max-w-md rounded-2xl border border-white/12 p-6 shadow-2xl shadow-black/60 md:w-[min(26rem,40vw)] md:bg-ink/70 lg:w-[min(24rem,28vw)] md:p-8 md:backdrop-blur-md;
+    @apply bg-ink/85 w-[66%] max-w-md rounded-2xl border border-white/12 p-4 sm:w-[60%] sm:p-6 shadow-2xl shadow-black/60 md:w-[min(26rem,40vw)] md:bg-ink/70 lg:w-[min(24rem,28vw)] md:p-8 md:backdrop-blur-md;
   }
 
   .category {
@@ -178,7 +178,7 @@ nav {
   }
 
   h3 {
-    @apply font-display mt-3 text-2xl md:text-3xl;
+    @apply font-display mt-2 text-xl leading-tight md:mt-3 md:text-3xl;
   }
 
   .summary {
