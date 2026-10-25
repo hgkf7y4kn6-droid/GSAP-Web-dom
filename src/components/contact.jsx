@@ -4,7 +4,7 @@ const year = new Date().getFullYear();
 
 const Contact = () => {
   return (
-    <section id="contact" className="noisy">
+    <section id="contact">
       <div className="content">
         <p className="eyebrow">Get in touch</p>
         <h2>Let&apos;s build something together</h2>

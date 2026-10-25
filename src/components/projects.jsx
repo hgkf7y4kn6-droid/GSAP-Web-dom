@@ -2,7 +2,7 @@ import { lovedProjects, projectLists } from "../../constants/index.js";
 
 const Projects = () => {
   return (
-    <section id="projects" className="noisy">
+    <section id="projects">
       <img
         src="/images/softwareprojects.png"
         alt="left software projects"
@@ -26,7 +26,12 @@ const Projects = () => {
                   <p>{summary}</p>
                 </div>
                 <span className="line" aria-hidden="true" />
-                <a href={url} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${linkLabel}: ${name} (opens in a new tab)`}
+                >
                   {linkLabel} ↗
                 </a>
               </li>
@@ -45,7 +50,12 @@ const Projects = () => {
                   <p>{summary}</p>
                 </div>
                 <span className="line" aria-hidden="true" />
-                <a href={url} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${linkLabel}: ${name} (opens in a new tab)`}
+                >
                   {linkLabel} ↗
                 </a>
               </li>

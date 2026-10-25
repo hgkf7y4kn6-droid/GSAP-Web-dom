@@ -8,15 +8,25 @@ import Contact from "./components/contact";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
+// Phones resize the viewport as the address bar shows and hides while
+// scrolling. Ignoring those resizes stops scroll animations from
+// recalculating mid-scroll, which is what makes them stutter.
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 const App = () => {
   return (
-    <main>
+    <>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <Navbar />
-      <Hero />
-      <Projects />
-      <About />
-      <Contact />
-    </main>
+      <main id="main" tabIndex={-1}>
+        <Hero />
+        <Projects />
+        <About />
+        <Contact />
+      </main>
+    </>
   );
 };
 

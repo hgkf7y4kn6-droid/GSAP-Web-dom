@@ -3,6 +3,8 @@
 
 @theme {
   --font-display: "DM Serif Display", serif;
+  --color-ink: #050507;
+  --color-focus: #8fb3ff;
 }
 
 @utility flex-center {
@@ -10,30 +12,71 @@
 }
 
 @utility text-gradient {
-  background: linear-gradient(to bottom, #ffffff, #898989);
+  background: linear-gradient(to bottom, #ffffff, #9a9a9a);
   background-clip: text;
   color: transparent;
 }
 
-/* Keep section headings clear of the fixed navbar, which is two rows tall on phones. */
 html {
-  @apply scroll-pt-16 md:scroll-pt-0;
+  @apply bg-ink motion-safe:scroll-smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  @apply bg-black text-white;
+  @apply bg-ink text-white antialiased;
 }
 
-.noisy {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
+/* A clear, consistent keyboard focus ring on every interactive element. */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+main:focus {
+  outline: none;
+}
+
+.skip-link {
+  @apply absolute top-4 left-4 z-[60] -translate-y-24 rounded-full bg-white px-5 py-2.5 font-semibold text-black transition-transform focus:translate-y-0;
+}
+
+nav {
+  @apply fixed inset-x-0 top-0 z-50 isolate;
+
+  /* The glass layer is always present; only its opacity animates. */
+  &::before {
+    @apply bg-ink/75 absolute inset-0 -z-10 border-b border-white/10 opacity-0 backdrop-blur-md transition-opacity duration-300 content-[''];
+  }
+
+  &.scrolled::before {
+    @apply opacity-100;
+  }
+
+  .brand {
+    @apply flex items-center gap-2.5 py-1 font-medium;
+  }
+
+  ul {
+    @apply flex items-center gap-5 text-sm sm:gap-8 sm:text-base lg:gap-12;
+  }
+
+  ul a {
+    @apply block py-2 text-white/85 transition-colors hover:text-white;
+  }
 }
 
 #hero {
-  @apply relative z-10 min-h-dvh w-full overflow-hidden;
+  @apply relative z-10 min-h-svh w-full overflow-hidden;
+  /* A soft blue glow behind where the computer sits, on a clean dark base. */
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 62%,
+    rgb(59 91 219 / 0.16),
+    transparent 70%
+  );
 
   .title {
-    @apply font-display mt-36 px-5 text-center text-6xl leading-none md:mt-28 md:text-[7vw];
+    @apply font-display mt-24 px-5 text-center text-5xl leading-none sm:text-6xl md:mt-28 md:text-[7vw];
   }
 
   .left-paper-ui,
@@ -43,11 +86,11 @@ body {
   }
 
   .left-paper-ui {
-    @apply top-[17%] -left-6 w-24 -rotate-12 md:top-[16%] lg:top-[36%] md:-left-10 md:w-60 xl:w-72;
+    @apply top-[15%] -left-6 w-24 -rotate-12 md:top-[16%] md:-left-10 md:w-60 lg:top-[36%] xl:w-72;
   }
 
   .right-paper-ui {
-    @apply top-[21%] -right-6 w-24 rotate-12 md:top-[3%] md:-right-12 md:w-48 xl:w-56;
+    @apply top-[19%] -right-6 w-24 rotate-12 md:top-[3%] md:-right-12 md:w-48 xl:w-56;
   }
 
   .arrow {
@@ -55,10 +98,18 @@ body {
   }
 
   .body {
-    @apply absolute bottom-10 left-1/2 container mx-auto flex -translate-x-1/2 items-end justify-between px-5 lg:bottom-16;
+    @apply absolute bottom-8 left-1/2 container mx-auto flex -translate-x-1/2 items-end justify-between px-5 lg:bottom-16;
+    /* Keeps the copy crisp where it overlaps the edges of the computer. */
+    text-shadow:
+      0 1px 2px rgb(0 0 0 / 0.6),
+      0 0 24px rgb(5 5 7 / 0.9);
 
     .content {
       @apply mx-auto flex w-full flex-col items-center justify-between gap-10 md:flex-row md:items-end;
+    }
+
+    .tagline {
+      @apply hidden space-y-5 md:block;
     }
 
     .subtitle {
@@ -66,21 +117,42 @@ body {
     }
 
     .view-cocktails {
-      @apply w-full space-y-5 text-base md:max-w-xs lg:max-w-2xs;
+      @apply w-full space-y-4 text-base md:max-w-xs lg:max-w-2xs;
 
       .subtitle {
-        @apply font-sans text-base leading-relaxed text-white/80;
+        @apply font-sans text-base leading-relaxed text-white/85;
       }
 
       a {
-        @apply font-semibold underline-offset-4 hover:underline;
+        @apply inline-block py-1 font-semibold underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white;
       }
     }
   }
 }
 
+/* The scroll-driven computer. Its position is the same in the hero and when it
+   lands in the projects section, so #projects pads down to clear it. */
+#hero + .video {
+  @apply pointer-events-none;
+
+  .media {
+    @apply absolute top-[27svh] left-0 isolate h-[44svh] w-screen md:top-[34svh] md:left-[5vw] md:h-auto md:w-[90vw] md:aspect-video lg:top-[24svh] lg:left-[calc(50vw-min(38vw,60svh))] lg:w-[min(76vw,120svh)];
+  }
+
+  .glow {
+    @apply absolute -inset-[12%] -z-10;
+    background: radial-gradient(closest-side, rgb(76 128 255 / 0.32), transparent);
+  }
+
+  video {
+    @apply size-full object-cover;
+    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
+    filter: brightness(1.12) contrast(1.06) saturate(1.15);
+  }
+}
+
 #projects {
-  @apply relative min-h-dvh w-full overflow-hidden pt-[92vh] pb-40 md:pt-[80vh] md:pb-72 lg:pt-[92vh] lg:pb-40;
+  @apply relative min-h-svh w-full overflow-hidden pt-[calc(71svh+2.5rem)] pb-32 md:pt-[calc(34svh+50.625vw+2rem)] md:pb-48 lg:pt-[calc(24svh+min(42.75vw,67.5svh)+1.5rem)] lg:pb-40;
 
   #lsp,
   #rsp {
@@ -93,7 +165,7 @@ body {
   }
 
   #rsp {
-    @apply top-[12%] -right-6 rotate-12 lg:top-[7%] lg:w-36;
+    @apply top-[12%] -right-6 hidden rotate-12 md:block lg:top-[7%] lg:w-36;
   }
 
   .list {
@@ -105,7 +177,7 @@ body {
     @apply w-full lg:max-w-xl;
 
     h2 {
-      @apply text-sm tracking-widest text-white/60 uppercase;
+      @apply text-sm tracking-widest text-white/65 uppercase;
     }
 
     ul {
@@ -125,7 +197,7 @@ body {
     }
 
     p {
-      @apply mt-3 text-sm leading-relaxed text-white/70 md:text-base md:leading-relaxed;
+      @apply mt-3 text-sm leading-relaxed text-white/75 md:text-base md:leading-relaxed;
     }
 
     .line {
@@ -133,7 +205,7 @@ body {
     }
 
     a {
-      @apply shrink-0 text-sm font-semibold whitespace-nowrap hover:underline md:mt-1.5;
+      @apply shrink-0 py-1 text-sm font-semibold whitespace-nowrap underline decoration-transparent underline-offset-4 transition-colors hover:decoration-white md:mt-0.5;
     }
   }
 
@@ -162,12 +234,12 @@ body {
     }
 
     dd {
-      @apply mt-1 text-sm leading-snug text-white/60;
+      @apply mt-1 text-sm leading-snug text-white/65;
     }
   }
 
   .bio {
-    @apply max-w-2xl space-y-6 text-base leading-relaxed text-white/75 md:text-lg md:leading-relaxed;
+    @apply max-w-2xl space-y-6 text-base leading-relaxed text-white/80 md:text-lg md:leading-relaxed;
 
     .lead {
       @apply font-display text-2xl leading-snug text-white md:text-3xl md:leading-snug;
@@ -177,21 +249,26 @@ body {
       @apply border-t border-white/10 pt-6;
 
       a {
-        @apply font-display text-xl text-white underline decoration-white/30 underline-offset-8 transition-colors hover:decoration-white md:text-2xl;
+        @apply font-display text-xl text-white underline decoration-white/40 underline-offset-8 transition-colors hover:decoration-white md:text-2xl;
       }
     }
   }
 }
 
 #contact {
-  @apply relative flex min-h-[80dvh] w-full flex-col justify-between px-5 pt-32 pb-8;
+  @apply relative flex min-h-[80svh] w-full flex-col justify-between px-5 pt-32 pb-8;
+  background: radial-gradient(
+    ellipse 60% 45% at 50% 45%,
+    rgb(59 91 219 / 0.1),
+    transparent 70%
+  );
 
   .content {
     @apply mx-auto flex max-w-2xl flex-col items-center text-center;
   }
 
   .eyebrow {
-    @apply text-sm tracking-widest text-white/60 uppercase;
+    @apply text-sm tracking-widest text-white/65 uppercase;
   }
 
   h2 {
@@ -199,14 +276,14 @@ body {
   }
 
   .lead {
-    @apply mt-6 leading-relaxed text-white/70 md:text-lg;
+    @apply mt-6 leading-relaxed text-white/80 md:text-lg;
   }
 
   .links {
     @apply mt-10 flex w-full flex-col gap-4 sm:w-auto sm:flex-row;
 
     a {
-      @apply rounded-full border border-white/30 px-7 py-3 font-semibold transition-colors hover:border-white hover:bg-white hover:text-black;
+      @apply rounded-full border border-white/40 px-7 py-3 font-semibold transition-colors hover:border-white hover:bg-white hover:text-black;
     }
 
     a:last-child {
@@ -215,15 +292,6 @@ body {
   }
 
   footer {
-    @apply mt-24 text-center text-sm text-white/40;
-  }
-}
-
-#hero + .video {
-  @apply pointer-events-none;
-
-  video {
-    @apply absolute inset-x-0 top-[36%] h-[38vh] w-full object-cover md:top-[31%] md:left-[5vw] md:h-auto md:w-[90vw] md:aspect-video lg:top-[28%] lg:left-[calc(50vw-min(35vw,55vh))] lg:w-[min(70vw,110vh)];
-    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
+    @apply mt-24 text-center text-sm text-white/60;
   }
 }

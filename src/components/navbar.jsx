@@ -1,38 +1,32 @@
-import gsap from "gsap";
+import { useRef } from "react";
+import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { navLinks } from "../../constants/index.js";
 
 const Navbar = () => {
-  useGSAP(() => {
-    const navTween = gsap.timeline({
-      scrollTrigger: {
-        trigger: "nav",
-        start: "bottom top",
-        toggleActions: "play none none reverse",
-      },
-    });
+  const navRef = useRef();
 
-    navTween.fromTo(
-      "nav",
-      { backgroundColor: "transparent", backdropFilter: "blur(0px)" },
-      {
-        backgroundColor: "#00000050",
-        backdropFilter: "blur(10px)",
-        duration: 1,
-        ease: "power1.inOut",
-      },
-    );
+  // Fade in the glassy background once the page scrolls. The blur layer is
+  // always there and only its opacity changes, which phones can animate far
+  // more smoothly than an animated backdrop-filter.
+  useGSAP(() => {
+    ScrollTrigger.create({
+      start: 40,
+      end: "max",
+      onToggle: ({ isActive }) =>
+        navRef.current.classList.toggle("scrolled", isActive),
+    });
   });
 
   return (
-    <nav className="fixed top-0 z-50 w-full">
-      <div className="container mx-auto flex flex-col items-center gap-5 px-5 py-5 md:flex-row md:justify-between">
-        <a href="#home" className="flex items-center gap-2">
-          <img src="/logo.png" alt="Riches Digital Ventures logo" className="size-9" />
-          <p>Riches Digital Ventures</p>
+    <nav ref={navRef}>
+      <div className="container mx-auto flex items-center justify-between gap-4 px-5 py-4 md:py-5">
+        <a href="#hero" className="brand">
+          <img src="/logo.png" alt="" className="size-9" />
+          <span className="sr-only sm:not-sr-only">Riches Digital Ventures</span>
         </a>
 
-        <ul className="flex-center gap-7 lg:gap-12">
+        <ul>
           {navLinks.map((link) => (
             <li key={link.id}>
               <a href={`#${link.id}`}>{link.title}</a>
