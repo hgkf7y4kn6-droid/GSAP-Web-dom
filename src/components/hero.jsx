@@ -74,21 +74,36 @@ const Hero = () => {
 
       const video = videoRef.current;
 
-      // Pin the computer from the very top of the page until the projects
-      // section reaches the top, so it never shifts position and always lands
-      // exactly where the layout puts it. The small scrub delay smooths out
-      // video seeking on touch screens.
+      // Pin the computer from the very top of the page through the end of the
+      // projects section, so it stays the centrepiece while the project cards
+      // pass on either side. The small scrub delay smooths out video seeking
+      // on touch screens.
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "#hero",
           start: "top top",
           endTrigger: "#projects",
-          end: "top top",
+          end: "bottom bottom",
           scrub: 0.5,
           pin: mediaRef.current,
           anticipatePin: 1,
         },
       });
+
+      // On tablets and up, ease the computer down a little as the projects
+      // arrive so the cards have room beside it.
+      if (!isMobile) {
+        gsap.to(mediaRef.current, {
+          scale: 0.8,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: "#projects",
+            start: "top bottom",
+            end: "top top",
+            scrub: 0.5,
+          },
+        });
+      }
 
       // Scrub the video from its first to its last frame as the user scrolls.
       const animateVideo = () => {
