@@ -1,10 +1,27 @@
 @import "tailwindcss";
-@import "@fontsource/dm-serif-display";
+@import "@fontsource-variable/syne";
+@import "@fontsource-variable/inter-tight";
+@import "@fontsource/geist-mono/400.css";
+@import "@fontsource/geist-mono/500.css";
 
 @theme {
-  --font-display: "DM Serif Display", serif;
-  --color-ink: #050507;
-  --color-focus: #8fb3ff;
+  --font-display: "Syne Variable", system-ui, sans-serif;
+  --font-sans: "Inter Tight Variable", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+
+  /* Canvas void and layered translucent surfaces. */
+  --color-ink: #0a0d14;
+  --color-surface: rgb(30 41 59 / 0.6);
+  --color-line: rgb(255 255 255 / 0.08);
+
+  /* Vitreous cobalt, with champagne reserved for the highest-value CTAs. */
+  --color-cobalt: #2563eb;
+  --color-cobalt-light: #60a5fa;
+  --color-cobalt-pale: #93c5fd;
+  --color-champagne: #e7d3a8;
+  --color-focus: #93c5fd;
+
+  --blur-glass: 16px;
 }
 
 @utility flex-center {
@@ -18,12 +35,26 @@
 }
 
 html {
-  @apply bg-ink motion-safe:scroll-smooth;
+  @apply bg-ink;
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  @apply bg-ink text-white antialiased;
+  @apply bg-ink font-sans text-white antialiased;
+  letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
+}
+
+/* A faint, persistent film grain softens digital harshness. */
+body::after {
+  content: "";
+  @apply pointer-events-none fixed inset-0 z-[55] opacity-[0.03];
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* A clear, consistent keyboard focus ring on every interactive element. */
@@ -71,12 +102,12 @@ nav {
   /* A soft blue glow behind where the computer sits, on a clean dark base. */
   background: radial-gradient(
     ellipse 70% 55% at 50% 62%,
-    rgb(59 91 219 / 0.16),
+    rgb(37 99 235 / 0.16),
     transparent 70%
   );
 
   .title {
-    @apply font-display mt-24 px-5 text-center text-5xl leading-none sm:text-6xl md:mt-28 md:text-[7vw];
+    @apply font-display mt-24 px-5 text-center text-5xl leading-none sm:text-6xl md:mt-28 md:text-[6vw];
   }
 
   .left-paper-ui,
@@ -102,7 +133,7 @@ nav {
     /* Keeps the copy crisp where it overlaps the edges of the computer. */
     text-shadow:
       0 1px 2px rgb(0 0 0 / 0.6),
-      0 0 24px rgb(5 5 7 / 0.9);
+      0 0 24px rgb(10 13 20 / 0.9);
 
     .content {
       @apply mx-auto flex w-full flex-col items-center justify-between gap-10 md:flex-row md:items-end;
@@ -141,7 +172,7 @@ nav {
 
   .glow {
     @apply absolute -inset-[12%] -z-10;
-    background: radial-gradient(closest-side, rgb(76 128 255 / 0.32), transparent);
+    background: radial-gradient(closest-side, rgb(96 165 250 / 0.3), transparent);
   }
 
   video {
@@ -170,11 +201,11 @@ nav {
   }
 
   .card {
-    @apply bg-ink/85 w-[66%] max-w-md rounded-2xl border border-white/12 p-4 sm:w-[60%] sm:p-6 shadow-2xl shadow-black/60 md:w-[min(26rem,40vw)] md:bg-ink/70 lg:w-[min(24rem,28vw)] md:p-8 md:backdrop-blur-md;
+    @apply bg-surface w-[66%] max-w-md rounded-2xl border border-line p-4 sm:w-[60%] sm:p-6 shadow-2xl shadow-black/60 md:w-[min(26rem,40vw)] md:bg-surface lg:w-[min(24rem,28vw)] md:p-8 md:backdrop-blur-md;
   }
 
   .category {
-    @apply text-xs font-medium tracking-widest text-white/65 uppercase;
+    @apply font-mono text-xs font-medium tracking-widest text-white/65 uppercase;
   }
 
   h3 {
@@ -236,7 +267,7 @@ nav {
   @apply bg-ink relative z-10 flex min-h-[80svh] w-full flex-col justify-between px-5 pt-32 pb-8;
   background-image: radial-gradient(
     ellipse 60% 45% at 50% 45%,
-    rgb(59 91 219 / 0.1),
+    rgb(37 99 235 / 0.12),
     transparent 70%
   );
 
@@ -245,7 +276,7 @@ nav {
   }
 
   .eyebrow {
-    @apply text-sm tracking-widest text-white/65 uppercase;
+    @apply font-mono text-sm tracking-widest text-white/65 uppercase;
   }
 
   h2 {
@@ -264,7 +295,7 @@ nav {
     }
 
     a:last-child {
-      @apply border-white bg-white text-black hover:bg-transparent hover:text-white;
+      @apply border-champagne bg-champagne text-black hover:bg-transparent hover:text-champagne;
     }
   }
 
