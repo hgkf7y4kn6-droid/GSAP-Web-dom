@@ -119,20 +119,6 @@ nav {
     @apply font-display mt-24 px-5 text-center text-5xl leading-none sm:text-6xl md:mt-28 md:text-[6vw];
   }
 
-  .left-paper-ui,
-  .right-paper-ui {
-    @apply absolute;
-    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 45%, transparent 100%);
-  }
-
-  .left-paper-ui {
-    @apply top-[15%] -left-6 w-24 -rotate-12 md:top-[16%] md:-left-10 md:w-60 lg:top-[36%] xl:w-72;
-  }
-
-  .right-paper-ui {
-    @apply top-[19%] -right-6 w-24 rotate-12 md:top-[3%] md:-right-12 md:w-48 xl:w-56;
-  }
-
   .arrow {
     @apply absolute top-[30%] right-[8%] hidden h-28 w-4 text-white/80 md:block;
   }

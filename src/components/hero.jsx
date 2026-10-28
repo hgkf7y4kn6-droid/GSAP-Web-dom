@@ -1,10 +1,9 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger, SplitText } from "gsap/all";
+import { SplitText } from "gsap/all";
 import { useMediaQuery } from "react-responsive";
 
 const Hero = () => {
-  const isMobile = useMediaQuery({ maxWidth: 767 });
   const prefersReducedMotion = useMediaQuery({
     query: "(prefers-reduced-motion: reduce)",
   });
@@ -12,21 +11,6 @@ const Hero = () => {
   useGSAP(() => {
     const heroSplit = new SplitText(".title", { type: "chars, words" });
     heroSplit.chars.forEach((char) => char.classList.add("text-gradient"));
-
-    // Pause the decorative paper animations while the hero is off screen so
-    // phones aren't decoding video nobody can see.
-    const papers = gsap.utils.toArray(".left-paper-ui, .right-paper-ui");
-    ScrollTrigger.create({
-      trigger: "#hero",
-      start: "top top",
-      end: "bottom top",
-      onToggle: ({ isActive }) =>
-        papers.forEach((paper) =>
-          isActive && !prefersReducedMotion
-            ? paper.play().catch(() => {})
-            : paper.pause(),
-        ),
-    });
 
     if (prefersReducedMotion) return;
 
@@ -50,27 +34,6 @@ const Hero = () => {
     });
   }, [prefersReducedMotion]);
 
-  useGSAP(
-    () => {
-      if (!prefersReducedMotion) {
-        // On mobile the right paper sits just above the paragraph, so both
-        // papers drift up there instead of the right one moving down into it.
-        gsap
-          .timeline({
-            scrollTrigger: {
-              trigger: "#hero",
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          })
-          .to(".right-paper-ui", { y: isMobile ? -150 : 200 }, 0)
-          .to(".left-paper-ui", { y: isMobile ? -150 : -200 }, 0);
-      }
-    },
-    { dependencies: [isMobile, prefersReducedMotion], revertOnUpdate: true },
-  );
-
   return (
     <>
       <section id="hero">
@@ -89,31 +52,6 @@ const Hero = () => {
         </video>
 
         <h1 className="title">Riches Digital Ventures</h1>
-
-        <video
-          className="left-paper-ui"
-          poster="/images/paper-ui-poster.jpg"
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        >
-          <source src="/videos/paper-ui.mp4" type="video/mp4" />
-          <source src="/videos/paper-ui.webm" type="video/webm" />
-        </video>
-        <video
-          className="right-paper-ui"
-          poster="/images/paper-ui-poster.jpg"
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        >
-          <source src="/videos/paper-ui.mp4" type="video/mp4" />
-          <source src="/videos/paper-ui.webm" type="video/webm" />
-        </video>
 
         <svg
           className="arrow"
