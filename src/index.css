@@ -303,3 +303,21 @@ nav {
     @apply mt-24 text-center text-sm text-white/60;
   }
 }
+
+.cursor {
+  @apply pointer-events-none fixed top-0 left-0 z-[70] -ml-4 -mt-4 size-8 rounded-full border border-cobalt-pale/70 opacity-0 transition-[opacity,scale] duration-300;
+
+  &[data-active="true"] {
+    @apply opacity-100;
+  }
+
+  &[data-hover="true"] {
+    @apply scale-150 bg-cobalt-pale/15;
+  }
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor {
+    display: none;
+  }
+}

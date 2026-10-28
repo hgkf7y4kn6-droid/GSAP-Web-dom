@@ -1,6 +1,8 @@
+import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "react-responsive";
+import { useMagnetic } from "../hooks/useMagnetic";
 import { lovedProjects, projectLists } from "../../constants/index.js";
 
 // Interleave the two lists so the cards alternate left and right beside the
@@ -14,6 +16,9 @@ const Projects = () => {
   const prefersReducedMotion = useMediaQuery({
     query: "(prefers-reduced-motion: reduce)",
   });
+
+  const ref = useRef();
+  useMagnetic(ref, "#projects .card a", 0.2);
 
   // Slide each card in from its own side as it scrolls into view.
   useGSAP(() => {
@@ -35,7 +40,7 @@ const Projects = () => {
   }, [prefersReducedMotion]);
 
   return (
-    <section id="projects" aria-labelledby="projects-heading">
+    <section id="projects" ref={ref} aria-labelledby="projects-heading">
       <h2 id="projects-heading" className="sr-only">
         Projects
       </h2>

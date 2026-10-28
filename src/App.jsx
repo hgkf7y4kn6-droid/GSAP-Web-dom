@@ -1,5 +1,8 @@
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
+import { useEffect } from "react";
+import { startSmoothScroll } from "./lib/smooth-scroll";
+import Cursor from "./components/cursor";
 import Navbar from "./components/navbar";
 import Hero from "./components/hero";
 import Projects from "./components/projects";
@@ -14,11 +17,14 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 ScrollTrigger.config({ ignoreMobileResize: true });
 
 const App = () => {
+  useEffect(() => startSmoothScroll(), []);
+
   return (
     <>
       <a href="#main" className="skip-link">
         Skip to content
       </a>
+      <Cursor />
       <Navbar />
       <main id="main" tabIndex={-1}>
         <Hero />

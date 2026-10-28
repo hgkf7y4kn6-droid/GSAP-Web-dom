@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { useMaskReveal } from "../hooks/useMaskReveal";
 import {
   aboutClosing,
   aboutHighlights,
@@ -6,9 +8,11 @@ import {
 
 const About = () => {
   const [lead, ...body] = aboutParagraphs;
+  const ref = useRef();
+  useMaskReveal(ref, "#about h2");
 
   return (
-    <section id="about">
+    <section id="about" ref={ref}>
       <div className="container mx-auto grid gap-12 px-5 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
         <aside className="intro">
           <h2>About Me</h2>
