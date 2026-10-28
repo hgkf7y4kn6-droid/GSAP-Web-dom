@@ -34,7 +34,7 @@ const Lab = () => {
   const [visible, setVisible] = useState(false);
   const [cameraType, setCameraType] = useState("perspective");
   const [fov, setFov] = useState(50);
-  const [zoom, setZoom] = useState(100);
+  const [zoom, setZoom] = useState(110);
   const [dollyRuns, setDollyRuns] = useState(0);
   const [dollying, setDollying] = useState(false);
   const [webgl] = useState(hasWebGL);
@@ -63,11 +63,11 @@ const Lab = () => {
     <section id="lab" ref={ref} aria-labelledby="lab-heading">
       <div className="container mx-auto px-5">
         <p className="eyebrow">Camera lab</p>
-        <h2 id="lab-heading">Perspective, tested live</h2>
+        <h2 id="lab-heading">Inside the circuit core</h2>
         <p className="lead">
-          A small React Three Fiber experiment. Switch between a perspective
-          camera, which mimics human vision, and an orthographic one, which
-          keeps objects the same size at any distance.
+          The circuit core film, mapped into a live React Three Fiber scene.
+          Switch between a perspective camera, which mimics human vision, and
+          an orthographic one that keeps depth flat, then try the dolly zoom.
         </p>
 
         <div className="stage">
@@ -80,7 +80,7 @@ const Lab = () => {
                   fov={fov}
                   zoom={zoom}
                   visible={visible}
-                  spin={!reduced}
+                  animate={!reduced}
                   dollyRuns={dollyRuns}
                   onFov={setFov}
                   onDollyDone={() => setDollying(false)}

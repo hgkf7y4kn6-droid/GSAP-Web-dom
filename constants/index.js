@@ -30,6 +30,7 @@ const projectLists = [
       "Live sports analytics site that runs Monte Carlo simulations on NFL games, alongside real DraftKings salaries and Sleeper projections. Python and FastAPI.",
     url: "https://dfsriches.richesdigitalventures.com",
     linkLabel: "Visit site",
+    preview: true,
   },
   {
     name: "Mindful Money Management",
@@ -40,6 +41,7 @@ const projectLists = [
       "Personal finance app for tracking subscriptions and spending insights. Expo / React Native with a FastAPI backend that connects bank accounts through Plaid.",
     url: "https://mmm.richesdigitalventures.com",
     linkLabel: "Visit site",
+    preview: true,
   },
   {
     name: "Healthcare Agent",
@@ -71,6 +73,7 @@ const lovedProjects = [
       "Offline-first project management for pool builders, from lead to warranty. Expo / React Native app with a Fastify, PostgreSQL and Redis API.",
     url: "https://pool.richesdigitalventures.com",
     linkLabel: "Visit site",
+    preview: true,
   },
   {
     name: "News Agent",

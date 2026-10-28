@@ -37,3 +37,12 @@ export const startSmoothScroll = () => {
     lenis = null;
   };
 };
+
+// Freezes page scrolling while a modal panel is open.
+export const setScrollLocked = (locked) => {
+  if (lenis) {
+    if (locked) lenis.stop();
+    else lenis.start();
+  }
+  document.documentElement.style.overflow = locked ? "hidden" : "";
+};

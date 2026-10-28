@@ -19,7 +19,10 @@
   --color-cobalt-light: #60a5fa;
   --color-cobalt-pale: #93c5fd;
   --color-champagne: #e7d3a8;
-  --color-focus: #93c5fd;
+  /* Pulled from the circuit-core film: cyan traces with amber accents. */
+  --color-circuit: #3fd8ff;
+  --color-amber: #f5b25c;
+  --color-focus: #3fd8ff;
 
   --blur-glass: 16px;
 }
@@ -102,7 +105,7 @@ nav {
   /* A soft blue glow behind where the computer sits, on a clean dark base. */
   background: radial-gradient(
     ellipse 70% 55% at 50% 62%,
-    rgb(37 99 235 / 0.16),
+    rgb(63 216 255 / 0.12),
     transparent 70%
   );
 
@@ -172,7 +175,7 @@ nav {
 
   .glow {
     @apply absolute -inset-[12%] -z-10;
-    background: radial-gradient(closest-side, rgb(96 165 250 / 0.3), transparent);
+    background: radial-gradient(closest-side, rgb(63 216 255 / 0.28), transparent);
   }
 
   video {
@@ -217,7 +220,7 @@ nav {
   }
 
   .problem {
-    @apply mt-3 text-sm leading-relaxed text-cobalt-pale md:text-base;
+    @apply mt-3 text-sm leading-relaxed text-circuit md:text-base;
   }
 
   .metrics {
@@ -248,7 +251,7 @@ nav {
 /* Solid background so the computer, released at the end of the projects
    section, scrolls away underneath. */
 #about {
-  @apply bg-ink relative z-10 w-full border-t border-white/10 py-28 md:py-36;
+  @apply bg-ink relative z-10 w-full py-28 md:py-36;
 
   .intro {
     @apply lg:sticky lg:top-32 lg:self-start;
@@ -291,7 +294,7 @@ nav {
   @apply bg-ink relative z-10 flex min-h-[80svh] w-full flex-col justify-between px-5 pt-32 pb-8;
   background-image: radial-gradient(
     ellipse 60% 45% at 50% 45%,
-    rgb(37 99 235 / 0.12),
+    rgb(63 216 255 / 0.1),
     transparent 70%
   );
 
@@ -329,14 +332,14 @@ nav {
 }
 
 .cursor {
-  @apply pointer-events-none fixed top-0 left-0 z-[70] -ml-4 -mt-4 size-8 rounded-full border border-cobalt-pale/70 opacity-0 transition-[opacity,scale] duration-300;
+  @apply pointer-events-none fixed top-0 left-0 z-[70] -ml-4 -mt-4 size-8 rounded-full border border-circuit/70 opacity-0 transition-[opacity,scale] duration-300;
 
   &[data-active="true"] {
     @apply opacity-100;
   }
 
   &[data-hover="true"] {
-    @apply scale-150 bg-cobalt-pale/15;
+    @apply scale-150 bg-circuit/15;
   }
 }
 
@@ -347,10 +350,10 @@ nav {
 }
 
 #lab {
-  @apply bg-ink relative z-10 w-full border-t border-line py-28 md:py-36;
+  @apply bg-ink relative z-10 w-full py-28 md:py-36;
 
   .eyebrow {
-    @apply font-mono text-sm tracking-widest text-white/65 uppercase;
+    @apply font-mono text-sm tracking-widest text-circuit uppercase;
   }
 
   h2 {
@@ -380,7 +383,7 @@ nav {
       @apply px-3 py-2 text-white/70 capitalize transition-colors;
 
       &[aria-pressed="true"] {
-        @apply bg-cobalt text-white;
+        @apply bg-circuit text-ink;
       }
     }
   }
@@ -389,7 +392,7 @@ nav {
     @apply flex flex-1 items-center gap-3;
 
     input {
-      @apply accent-cobalt-light min-w-24 flex-1;
+      @apply accent-circuit min-w-24 flex-1;
     }
 
     output {
@@ -399,5 +402,119 @@ nav {
 
   .dolly {
     @apply border-champagne text-champagne hover:bg-champagne rounded-full border px-4 py-2 transition-colors hover:text-black disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-champagne;
+  }
+}
+
+/* Circuit traces that link the sections, drawn on scroll. */
+.divider {
+  @apply bg-ink relative z-10 h-14 w-full md:h-20;
+
+  svg {
+    @apply size-full;
+  }
+
+  .trace {
+    stroke: var(--color-circuit);
+    filter: drop-shadow(0 0 6px rgb(63 216 255 / 0.6));
+  }
+
+  .node {
+    fill: var(--color-circuit);
+  }
+
+  .amber {
+    stroke: var(--color-amber);
+    filter: drop-shadow(0 0 6px rgb(245 178 92 / 0.5));
+  }
+
+  circle.amber {
+    fill: var(--color-amber);
+    stroke: none;
+  }
+}
+
+#projects .preview-btn {
+  @apply mt-5 ml-4 inline-block py-1 text-sm font-semibold text-circuit underline decoration-circuit/40 underline-offset-4 transition-colors hover:decoration-circuit;
+}
+
+/* Live-preview flyout, rendered into <body>. */
+.flyout-backdrop {
+  @apply fixed inset-0 z-[60] flex justify-end bg-black/60 backdrop-blur-sm;
+  animation: fade-in 0.25s ease-out;
+}
+
+.flyout {
+  @apply bg-ink border-line flex h-full w-full flex-col border-l shadow-2xl shadow-black md:w-[min(64rem,85vw)];
+  animation: slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  header {
+    @apply border-line flex flex-wrap items-center justify-between gap-3 border-b p-4 md:px-6;
+
+    .eyebrow {
+      @apply font-mono text-xs tracking-widest text-circuit uppercase;
+    }
+
+    h3 {
+      @apply font-display text-xl md:text-2xl;
+    }
+
+    .actions {
+      @apply flex flex-wrap items-center gap-3 text-sm;
+    }
+
+    .actions > a {
+      @apply font-semibold text-white underline decoration-white/40 underline-offset-4 hover:decoration-white;
+    }
+
+    .toggle {
+      @apply hidden overflow-hidden rounded-full border border-line font-mono text-xs md:flex;
+
+      button {
+        @apply px-3 py-1.5 text-white/70;
+
+        &[aria-pressed="true"] {
+          @apply bg-circuit text-ink;
+        }
+      }
+    }
+
+    .close {
+      @apply border-line hover:border-white size-9 rounded-full border transition-colors;
+    }
+  }
+
+  .frame-wrap {
+    @apply relative flex flex-1 justify-center overflow-auto bg-white/5;
+  }
+
+  iframe {
+    @apply h-full max-w-full border-0 bg-white transition-[width] duration-300;
+  }
+
+  .status {
+    @apply absolute inset-0 flex-center text-sm text-white/60;
+  }
+
+  .hint {
+    @apply border-line border-t px-4 py-3 text-xs text-white/55 md:px-6;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    translate: 100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flyout-backdrop,
+  .flyout {
+    animation: none;
   }
 }

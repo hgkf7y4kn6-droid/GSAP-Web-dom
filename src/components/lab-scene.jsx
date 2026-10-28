@@ -1,33 +1,89 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
-  Environment,
-  Lightformer,
   OrbitControls,
   OrthographicCamera,
   PerspectiveCamera,
 } from "@react-three/drei";
+import * as THREE from "three";
 
 const START_DISTANCE = 6;
+const WIDTH = 6.4;
+const HEIGHT = 3.6;
 
-const Subjects = ({ spin }) => {
+// The circuit-core film, mapped onto a plane. Frames of glowing outline sit
+// at different depths so the perspective / orthographic difference is obvious.
+const CircuitCore = ({ visible, animate }) => {
   const group = useRef();
+  const video = useMemo(() => {
+    const el = document.createElement("video");
+    el.muted = true;
+    el.loop = true;
+    el.playsInline = true;
+    el.crossOrigin = "anonymous";
+    el.preload = "auto";
+    // Prefer WebM where supported, falling back to MP4 (iOS Safari).
+    el.src = el.canPlayType("video/webm; codecs=vp9")
+      ? "/videos/circuit-core.webm"
+      : "/videos/circuit-core.mp4";
+    el.poster = "/images/circuit-core-poster.jpg";
+    return el;
+  }, []);
 
-  useFrame((_, delta) => {
-    if (spin) group.current.rotation.y += delta * 0.25;
+  const texture = useMemo(() => {
+    const t = new THREE.VideoTexture(video);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  }, [video]);
+
+  const poster = useMemo(() => {
+    const t = new THREE.TextureLoader().load("/images/circuit-core-poster.jpg");
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  }, []);
+
+  const frame = useMemo(
+    () => new THREE.EdgesGeometry(new THREE.PlaneGeometry(WIDTH, HEIGHT)),
+    [],
+  );
+
+  useEffect(() => {
+    if (visible && animate) video.play().catch(() => {});
+    else video.pause();
+  }, [visible, animate, video]);
+
+  useEffect(
+    () => () => {
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+      texture.dispose();
+      poster.dispose();
+      frame.dispose();
+    },
+    [video, texture, poster, frame],
+  );
+
+  useFrame(({ clock }) => {
+    if (animate) group.current.rotation.y = Math.sin(clock.elapsedTime * 0.4) * 0.18;
   });
 
   return (
     <group ref={group}>
-      <mesh position={[-1.4, 0, 0]}>
-        <sphereGeometry args={[1, 64, 64]} />
-        <meshStandardMaterial color="#60a5fa" metalness={0.6} roughness={0.25} />
+      <mesh>
+        <planeGeometry args={[WIDTH, HEIGHT]} />
+        <meshBasicMaterial map={animate ? texture : poster} toneMapped={false} />
       </mesh>
-      <mesh position={[1.4, 0, 0]} rotation={[0.4, 0.6, 0]}>
-        <boxGeometry args={[1.6, 1.6, 1.6]} />
-        <meshStandardMaterial color="#e7d3a8" metalness={0.4} roughness={0.35} />
-      </mesh>
+      {[
+        [-1.2, 1.12, 0.35],
+        [0.9, 1.06, 0.22],
+        [1.7, 1.2, 0.12],
+      ].map(([z, s, o]) => (
+        <lineSegments key={z} geometry={frame} position={[0, 0, z]} scale={[s, s, 1]}>
+          <lineBasicMaterial color="#3fd8ff" transparent opacity={o} />
+        </lineSegments>
+      ))}
     </group>
   );
 };
@@ -70,7 +126,7 @@ const DollyZoom = ({ runs, onFov, onDone }) => {
   return null;
 };
 
-const LabScene = ({ cameraType, fov, zoom, visible, spin, dollyRuns, onFov, onDollyDone }) => (
+const LabScene = ({ cameraType, fov, zoom, visible, animate, dollyRuns, onFov, onDollyDone }) => (
   <Canvas
     dpr={[1, 1.5]}
     frameloop={visible ? "always" : "never"}
@@ -81,14 +137,7 @@ const LabScene = ({ cameraType, fov, zoom, visible, spin, dollyRuns, onFov, onDo
     ) : (
       <OrthographicCamera makeDefault zoom={zoom} position={[0, 0, START_DISTANCE]} />
     )}
-    <ambientLight intensity={0.35} />
-    <directionalLight position={[4, 5, 3]} intensity={1.6} />
-    <pointLight position={[-4, -2, 3]} intensity={30} color="#2563eb" />
-    <Environment resolution={64} environmentIntensity={0.6}>
-      <Lightformer form="rect" intensity={4} position={[0, 4, -3]} scale={[8, 2, 1]} color="#93c5fd" />
-      <Lightformer form="rect" intensity={2} position={[-5, 0, 2]} scale={[2, 6, 1]} color="#e7d3a8" />
-    </Environment>
-    <Subjects spin={spin} />
+    <CircuitCore visible={visible} animate={animate} />
     <OrbitControls enablePan={false} enableZoom={false} />
     <DollyZoom runs={dollyRuns} onFov={onFov} onDone={onDollyDone} />
   </Canvas>
