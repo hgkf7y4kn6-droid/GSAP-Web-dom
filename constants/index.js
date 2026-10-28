@@ -25,7 +25,8 @@ const projectLists = [
     name: "Mindful Money Management",
     summary:
       "Personal finance app for tracking subscriptions and spending insights. Expo / React Native with a FastAPI backend that connects bank accounts through Plaid.",
-    url: "https://github.com/hgkf7y4kn6-droid/MMM",
+    url: "https://mmm.richesdigitalventures.com",
+    linkLabel: "Visit site",
   },
   {
     name: "Healthcare Agent",
@@ -46,7 +47,8 @@ const lovedProjects = [
     name: "Pool PM",
     summary:
       "Offline-first project management for pool builders, from lead to warranty. Expo / React Native app with a Fastify, PostgreSQL and Redis API.",
-    url: "https://github.com/hgkf7y4kn6-droid/Pool-Project-Workflow",
+    url: "https://pool.richesdigitalventures.com",
+    linkLabel: "Visit site",
   },
   {
     name: "News Agent",
