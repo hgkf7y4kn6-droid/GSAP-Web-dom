@@ -167,7 +167,7 @@ nav {
 /* The scroll-driven computer. Its position is the same in the hero and when it
    lands in the projects section, so #projects pads down to clear it. */
 #hero + .video {
-  @apply pointer-events-none;
+  @apply pointer-events-none overflow-x-clip;
 
   .media {
     @apply absolute top-[27svh] left-0 isolate h-[44svh] w-screen md:top-[34svh] md:left-[5vw] md:h-auto md:w-[90vw] md:aspect-video lg:top-[24svh] lg:left-[calc(50vw-min(38vw,60svh))] lg:w-[min(76vw,120svh)];
@@ -251,7 +251,7 @@ nav {
 /* Solid background so the computer, released at the end of the projects
    section, scrolls away underneath. */
 #about {
-  @apply bg-ink relative z-10 w-full py-28 md:py-36;
+  @apply relative z-10 w-full py-28 md:py-36;
 
   .intro {
     @apply lg:sticky lg:top-32 lg:self-start;
@@ -291,7 +291,7 @@ nav {
 }
 
 #contact {
-  @apply bg-ink relative z-10 flex min-h-[80svh] w-full flex-col justify-between px-5 pt-32 pb-8;
+  @apply relative z-10 flex min-h-[80svh] w-full flex-col justify-between px-5 pt-32 pb-8;
   background-image: radial-gradient(
     ellipse 60% 45% at 50% 45%,
     rgb(63 216 255 / 0.1),
@@ -346,62 +346,6 @@ nav {
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .cursor {
     display: none;
-  }
-}
-
-#lab {
-  @apply bg-ink relative z-10 w-full py-28 md:py-36;
-
-  .eyebrow {
-    @apply font-mono text-sm tracking-widest text-circuit uppercase;
-  }
-
-  h2 {
-    @apply font-display text-gradient mt-4 text-4xl leading-tight md:text-6xl;
-  }
-
-  .lead {
-    @apply mt-6 max-w-2xl leading-relaxed text-white/80 md:text-lg;
-  }
-
-  .stage {
-    @apply bg-surface border-line relative mt-12 aspect-[4/5] overflow-hidden rounded-2xl border sm:aspect-video;
-  }
-
-  .fallback {
-    @apply flex-center absolute inset-0 px-6 text-center text-white/70;
-  }
-
-  .hud {
-    @apply absolute inset-x-3 bottom-3 flex flex-wrap items-center gap-3 rounded-xl border border-line bg-ink/70 p-3 font-mono text-xs backdrop-blur-md md:inset-x-auto md:right-4 md:bottom-4 md:left-4;
-  }
-
-  .toggle {
-    @apply flex overflow-hidden rounded-full border border-line;
-
-    button {
-      @apply px-3 py-2 text-white/70 capitalize transition-colors;
-
-      &[aria-pressed="true"] {
-        @apply bg-circuit text-ink;
-      }
-    }
-  }
-
-  label {
-    @apply flex flex-1 items-center gap-3;
-
-    input {
-      @apply accent-circuit min-w-24 flex-1;
-    }
-
-    output {
-      @apply w-12 text-right text-white;
-    }
-  }
-
-  .dolly {
-    @apply border-champagne text-champagne hover:bg-champagne rounded-full border px-4 py-2 transition-colors hover:text-black disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-champagne;
   }
 }
 
@@ -516,5 +460,63 @@ nav {
   .flyout-backdrop,
   .flyout {
     animation: none;
+  }
+}
+
+/* One film behind About and Contact. The backdrop is sticky, so it stays put
+   while those sections scroll over it. */
+.circuit-zone {
+  @apply bg-ink relative z-10 w-full overflow-x-clip;
+
+  .backdrop {
+    @apply pointer-events-none sticky top-0 z-0 -mb-[100svh] h-svh w-full overflow-hidden;
+    mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+
+    video,
+    img {
+      @apply size-full object-cover opacity-30;
+    }
+
+    /* Keeps copy readable over the brightest parts of the film. */
+    &::after {
+      @apply absolute inset-0 content-[''];
+      background: radial-gradient(
+        ellipse 80% 70% at 50% 50%,
+        rgb(10 13 20 / 0.55),
+        rgb(10 13 20 / 0.9)
+      );
+    }
+  }
+
+  .divider {
+    @apply bg-transparent;
+  }
+}
+
+/* Glowing outline frames, echoing the depth frames from the film. Two offset
+   outlines sit behind the element like planes at different depths. */
+.glow-frames {
+  @apply relative isolate;
+
+  &::before,
+  &::after {
+    @apply pointer-events-none absolute -z-10 content-[''] rounded-[1.5rem] border border-circuit transition-opacity duration-500;
+  }
+
+  &::before {
+    @apply -inset-3 opacity-30;
+    box-shadow: 0 0 24px rgb(63 216 255 / 0.15);
+  }
+
+  &::after {
+    @apply -inset-6 rounded-[2rem] opacity-15;
+  }
+
+  &:hover::before {
+    @apply opacity-60;
+  }
+
+  &:hover::after {
+    @apply opacity-30;
   }
 }

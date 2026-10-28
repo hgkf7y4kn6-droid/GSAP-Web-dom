@@ -62,7 +62,7 @@ const Projects = () => {
             preview = false,
           }) => (
             <li key={name}>
-              <article className="card">
+              <article className="card glow-frames">
                 <p className="category">{category}</p>
                 <h3>{name}</h3>
                 {problem && <p className="problem">{problem}</p>}

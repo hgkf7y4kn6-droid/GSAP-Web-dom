@@ -7,7 +7,7 @@ import Navbar from "./components/navbar";
 import Hero from "./components/hero";
 import Projects from "./components/projects";
 import CircuitDivider from "./components/circuit-divider";
-import Lab from "./components/lab";
+import CircuitZone from "./components/circuit-zone";
 import About from "./components/about";
 import Contact from "./components/contact";
 
@@ -32,11 +32,11 @@ const App = () => {
         <Hero />
         <Projects />
         <CircuitDivider />
-        <Lab />
-        <CircuitDivider flip />
-        <About />
-        <CircuitDivider />
-        <Contact />
+        <CircuitZone>
+          <About />
+          <CircuitDivider flip />
+          <Contact />
+        </CircuitZone>
       </main>
     </>
   );
