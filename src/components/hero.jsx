@@ -1,13 +1,9 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger, SplitText } from "gsap/all";
-import { useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 
 const Hero = () => {
-  const mediaRef = useRef();
-  const videoRef = useRef();
-
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const prefersReducedMotion = useMediaQuery({
     query: "(prefers-reduced-motion: reduce)",
@@ -71,61 +67,6 @@ const Hero = () => {
           .to(".right-paper-ui", { y: isMobile ? -150 : 200 }, 0)
           .to(".left-paper-ui", { y: isMobile ? -150 : -200 }, 0);
       }
-
-      const video = videoRef.current;
-
-      // Pin the computer from the very top of the page through the end of the
-      // projects section, so it stays the centrepiece while the project cards
-      // pass on either side. The small scrub delay smooths out video seeking
-      // on touch screens.
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: "#hero",
-          start: "top top",
-          endTrigger: "#projects",
-          end: "bottom bottom",
-          scrub: 0.5,
-          pin: mediaRef.current,
-          anticipatePin: 1,
-        },
-      });
-
-      // On tablets and up, ease the computer down a little as the projects
-      // arrive so the cards have room beside it.
-      if (!isMobile) {
-        gsap.to(mediaRef.current, {
-          scale: 0.8,
-          ease: "power1.inOut",
-          scrollTrigger: {
-            trigger: "#projects",
-            start: "top bottom",
-            end: "top top",
-            scrub: 0.5,
-          },
-        });
-      }
-
-      // Scrub the video from its first to its last frame as the user scrolls.
-      const animateVideo = () => {
-        tl.to(video, { currentTime: video.duration, ease: "none" });
-      };
-
-      if (video.readyState >= 1) {
-        animateVideo();
-      } else {
-        video.addEventListener("loadedmetadata", animateVideo, { once: true });
-        // iOS Safari won't load a video until it has played, so start and
-        // immediately pause it (it's muted, so this is allowed without a tap).
-        video
-          .play()
-          .then(() => {
-            video.pause();
-            video.currentTime = 0;
-          })
-          .catch(() => {});
-      }
-
-      return () => video.removeEventListener("loadedmetadata", animateVideo);
     },
     { dependencies: [isMobile, prefersReducedMotion], revertOnUpdate: true },
   );
@@ -191,23 +132,6 @@ const Hero = () => {
           </div>
         </div>
       </section>
-
-      <div className="video absolute inset-0">
-        <div ref={mediaRef} className="media">
-          <div className="glow" aria-hidden="true" />
-          <video
-            ref={videoRef}
-            poster="/images/hero-poster.jpg"
-            muted
-            playsInline
-            preload="auto"
-            aria-label="Animated computer screen showing code turning into an app interface"
-          >
-            <source src="/videos/hero.mp4" type="video/mp4" />
-            <source src="/videos/hero.webm" type="video/webm" />
-          </video>
-        </div>
-      </div>
     </>
   );
 };
