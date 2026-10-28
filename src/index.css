@@ -251,7 +251,7 @@ nav {
 /* Solid background so the computer, released at the end of the projects
    section, scrolls away underneath. */
 #about {
-  @apply relative z-10 w-full py-28 md:py-36;
+  @apply relative z-10 w-full overflow-x-clip py-28 md:py-36;
 
   .intro {
     @apply lg:sticky lg:top-32 lg:self-start;
@@ -351,7 +351,7 @@ nav {
 
 /* Circuit traces that link the sections, drawn on scroll. */
 .divider {
-  @apply bg-ink relative z-10 h-14 w-full md:h-20;
+  @apply relative z-10 h-14 w-full md:h-20;
 
   svg {
     @apply size-full;
@@ -463,33 +463,23 @@ nav {
   }
 }
 
-/* One film behind About and Contact. The backdrop is sticky, so it stays put
-   while those sections scroll over it. */
-.circuit-zone {
-  @apply bg-ink relative z-10 w-full overflow-x-clip;
+/* One film fixed behind every section. Sections are transparent so it shows
+   through, and a vignette keeps copy readable. */
+.circuit-backdrop {
+  @apply pointer-events-none fixed inset-0 z-0 overflow-hidden;
 
-  .backdrop {
-    @apply pointer-events-none sticky top-0 z-0 -mb-[100svh] h-svh w-full overflow-hidden;
-    mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
-
-    video,
-    img {
-      @apply size-full object-cover opacity-55;
-    }
-
-    /* Keeps copy readable over the brightest parts of the film. */
-    &::after {
-      @apply absolute inset-0 content-[''];
-      background: radial-gradient(
-        ellipse 80% 70% at 50% 50%,
-        rgb(10 13 20 / 0.3),
-        rgb(10 13 20 / 0.82)
-      );
-    }
+  video,
+  img {
+    @apply size-full object-cover opacity-50;
   }
 
-  .divider {
-    @apply bg-transparent;
+  &::after {
+    @apply absolute inset-0 content-[''];
+    background: radial-gradient(
+      ellipse 80% 70% at 50% 50%,
+      rgb(10 13 20 / 0.3),
+      rgb(10 13 20 / 0.82)
+    );
   }
 }
 

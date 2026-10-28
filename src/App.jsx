@@ -7,7 +7,7 @@ import Navbar from "./components/navbar";
 import Hero from "./components/hero";
 import Projects from "./components/projects";
 import CircuitDivider from "./components/circuit-divider";
-import CircuitZone from "./components/circuit-zone";
+import CircuitBackdrop from "./components/circuit-backdrop";
 import About from "./components/about";
 import Contact from "./components/contact";
 
@@ -26,17 +26,16 @@ const App = () => {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
+      <CircuitBackdrop />
       <Cursor />
       <Navbar />
       <main id="main" tabIndex={-1}>
         <Hero />
         <Projects />
         <CircuitDivider />
-        <CircuitZone>
-          <About />
-          <CircuitDivider flip />
-          <Contact />
-        </CircuitZone>
+        <About />
+        <CircuitDivider flip />
+        <Contact />
       </main>
     </>
   );
