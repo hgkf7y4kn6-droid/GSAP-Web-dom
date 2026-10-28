@@ -216,6 +216,30 @@ nav {
     @apply mt-3 text-sm leading-relaxed text-white/80 md:text-base md:leading-relaxed;
   }
 
+  .problem {
+    @apply mt-3 text-sm leading-relaxed text-cobalt-pale md:text-base;
+  }
+
+  .metrics {
+    @apply mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line;
+
+    div {
+      @apply bg-ink/80 p-3;
+    }
+
+    dt {
+      @apply font-mono text-lg text-white md:text-xl;
+    }
+
+    dd {
+      @apply mt-1 text-xs leading-snug text-white/60;
+    }
+  }
+
+  .stack {
+    @apply mt-4 font-mono text-xs text-white/55;
+  }
+
   a {
     @apply mt-5 inline-block py-1 text-sm font-semibold underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white;
   }

@@ -16,6 +16,12 @@ const navLinks = [
 const projectLists = [
   {
     name: "Riches Analytics",
+    problem: "Weekly DFS lineup decisions rely on gut feel and scattered data.",
+    stack: ["Python", "FastAPI"],
+    metrics: [
+      { value: "NFL", label: "Monte Carlo game simulations" },
+      { value: "2", label: "Live data sources: DraftKings, Sleeper" },
+    ],
     summary:
       "Live sports analytics site that runs Monte Carlo simulations on NFL games, alongside real DraftKings salaries and Sleeper projections. Python and FastAPI.",
     url: "https://dfsriches.richesdigitalventures.com",
@@ -23,6 +29,9 @@ const projectLists = [
   },
   {
     name: "Mindful Money Management",
+    problem: "Subscriptions and spending drift unnoticed across accounts.",
+    stack: ["Expo", "React Native", "FastAPI", "Plaid"],
+    metrics: [{ value: "Plaid", label: "Bank account connections" }],
     summary:
       "Personal finance app for tracking subscriptions and spending insights. Expo / React Native with a FastAPI backend that connects bank accounts through Plaid.",
     url: "https://mmm.richesdigitalventures.com",
@@ -30,6 +39,9 @@ const projectLists = [
   },
   {
     name: "Healthcare Agent",
+    problem: "Routine patient requests tie up staff across several systems.",
+    stack: ["Python", "CrewAI", "Webhook API"],
+    metrics: [{ value: "4", label: "Workflows: refills, EHR, scheduling, tickets" }],
     summary:
       "Multi-agent healthcare assistant that handles prescription refills, EHR lookups, scheduling and support tickets. Python, CrewAI and a webhook API.",
     url: "https://github.com/hgkf7y4kn6-droid/Capstone-Healthcare-Agent",
@@ -39,12 +51,18 @@ const projectLists = [
 const lovedProjects = [
   {
     name: "Cost Comparison Tool",
+    problem: "Shoppers can't easily compare options on true cost per use.",
+    stack: ["FastAPI", "CLIP", "FAISS", "OCR"],
+    metrics: [{ value: "3", label: "Tiers: good, better, best" }],
     summary:
       "Good / better / best product matching that compares options on cost per use. FastAPI with CLIP, FAISS and OCR, deployed on Render and Cloudflare.",
     url: "https://github.com/hgkf7y4kn6-droid/Cost-Comparison-Tool",
   },
   {
     name: "Pool PM",
+    problem: "Pool builders juggle jobs from lead to warranty, often offline.",
+    stack: ["Expo", "React Native", "Fastify", "PostgreSQL", "Redis"],
+    metrics: [{ value: "Offline", label: "First, lead to warranty" }],
     summary:
       "Offline-first project management for pool builders, from lead to warranty. Expo / React Native app with a Fastify, PostgreSQL and Redis API.",
     url: "https://pool.richesdigitalventures.com",
@@ -52,6 +70,12 @@ const lovedProjects = [
   },
   {
     name: "News Agent",
+    problem: "Staying current means checking dozens of sources by hand.",
+    stack: ["Cloudflare Workers", "Vectorize", "Gemini"],
+    metrics: [
+      { value: "62", label: "Sources" },
+      { value: "Cited", label: "AI chat answers" },
+    ],
     summary:
       "Personal news reader across 62 sources with an AI chat assistant that answers with citations. Cloudflare Workers, Vectorize and Gemini.",
     url: "https://github.com/hgkf7y4kn6-droid/news-agent",

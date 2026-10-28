@@ -47,12 +47,35 @@ const Projects = () => {
 
       <ul className="list">
         {projects.map(
-          ({ name, summary, url, category, linkLabel = "View repo" }) => (
+          ({
+            name,
+            summary,
+            url,
+            category,
+            problem,
+            metrics = [],
+            stack = [],
+            linkLabel = "View repo",
+          }) => (
             <li key={name}>
               <article className="card">
                 <p className="category">{category}</p>
                 <h3>{name}</h3>
+                {problem && <p className="problem">{problem}</p>}
                 <p className="summary">{summary}</p>
+                {metrics.length > 0 && (
+                  <dl className="metrics">
+                    {metrics.map(({ value, label }) => (
+                      <div key={label}>
+                        <dt>{value}</dt>
+                        <dd>{label}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+                {stack.length > 0 && (
+                  <p className="stack">{stack.join(" · ")}</p>
+                )}
                 <a
                   href={url}
                   target="_blank"
