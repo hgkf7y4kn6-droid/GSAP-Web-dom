@@ -109,6 +109,12 @@ nav {
     transparent 70%
   );
 
+  /* The computer film loops quietly behind the hero copy. */
+  .hero-loop {
+    @apply pointer-events-none absolute inset-0 -z-10 size-full object-cover opacity-60;
+    mask-image: radial-gradient(ellipse 70% 65% at 50% 55%, #000 55%, transparent 100%);
+  }
+
   .title {
     @apply font-display mt-24 px-5 text-center text-5xl leading-none sm:text-6xl md:mt-28 md:text-[6vw];
   }

@@ -74,6 +74,20 @@ const Hero = () => {
   return (
     <>
       <section id="hero">
+        <video
+          className="hero-loop"
+          poster="/images/hero-poster.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+        >
+          <source src="/videos/hero.webm" type="video/webm" />
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
+
         <h1 className="title">Riches Digital Ventures</h1>
 
         <video
