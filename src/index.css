@@ -1,10 +1,30 @@
 @import "tailwindcss";
-@import "@fontsource/dm-serif-display";
+@import "@fontsource-variable/syne";
+@import "@fontsource-variable/inter-tight";
+@import "@fontsource/geist-mono/400.css";
+@import "@fontsource/geist-mono/500.css";
 
 @theme {
-  --font-display: "DM Serif Display", serif;
-  --color-ink: #050507;
-  --color-focus: #8fb3ff;
+  --font-display: "Syne Variable", system-ui, sans-serif;
+  --font-sans: "Inter Tight Variable", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+
+  /* Canvas void and layered translucent surfaces. */
+  --color-ink: #0a0d14;
+  --color-surface: rgb(30 41 59 / 0.6);
+  --color-line: rgb(255 255 255 / 0.08);
+
+  /* Vitreous cobalt, with champagne reserved for the highest-value CTAs. */
+  --color-cobalt: #2563eb;
+  --color-cobalt-light: #60a5fa;
+  --color-cobalt-pale: #93c5fd;
+  --color-champagne: #e7d3a8;
+  /* Pulled from the circuit-core film: cyan traces with amber accents. */
+  --color-circuit: #3fd8ff;
+  --color-amber: #f5b25c;
+  --color-focus: #3fd8ff;
+
+  --blur-glass: 16px;
 }
 
 @utility flex-center {
@@ -18,12 +38,26 @@
 }
 
 html {
-  @apply bg-ink motion-safe:scroll-smooth;
+  @apply bg-ink;
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  @apply bg-ink text-white antialiased;
+  @apply bg-ink font-sans text-white antialiased;
+  letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
+}
+
+/* A faint, persistent film grain softens digital harshness. */
+body::after {
+  content: "";
+  @apply pointer-events-none fixed inset-0 z-[55] opacity-[0.03];
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* A clear, consistent keyboard focus ring on every interactive element. */
@@ -71,12 +105,12 @@ nav {
   /* A soft blue glow behind where the computer sits, on a clean dark base. */
   background: radial-gradient(
     ellipse 70% 55% at 50% 62%,
-    rgb(59 91 219 / 0.16),
+    rgb(63 216 255 / 0.12),
     transparent 70%
   );
 
   .title {
-    @apply font-display mt-24 px-5 text-center text-5xl leading-none sm:text-6xl md:mt-28 md:text-[7vw];
+    @apply font-display mt-24 px-5 text-center text-5xl leading-none sm:text-6xl md:mt-28 md:text-[6vw];
   }
 
   .left-paper-ui,
@@ -102,7 +136,7 @@ nav {
     /* Keeps the copy crisp where it overlaps the edges of the computer. */
     text-shadow:
       0 1px 2px rgb(0 0 0 / 0.6),
-      0 0 24px rgb(5 5 7 / 0.9);
+      0 0 24px rgb(10 13 20 / 0.9);
 
     .content {
       @apply mx-auto flex w-full flex-col items-center justify-between gap-10 md:flex-row md:items-end;
@@ -141,7 +175,7 @@ nav {
 
   .glow {
     @apply absolute -inset-[12%] -z-10;
-    background: radial-gradient(closest-side, rgb(76 128 255 / 0.32), transparent);
+    background: radial-gradient(closest-side, rgb(63 216 255 / 0.28), transparent);
   }
 
   video {
@@ -154,7 +188,7 @@ nav {
 /* The computer stays pinned in the centre through this section while the
    project cards alternate down either side of it. */
 #projects {
-  @apply relative w-full pt-[55svh] pb-[35svh];
+  @apply relative w-full overflow-x-clip pt-[55svh] pb-[35svh];
 
   .list {
     @apply relative z-10 container mx-auto px-5;
@@ -170,11 +204,11 @@ nav {
   }
 
   .card {
-    @apply bg-ink/85 w-[66%] max-w-md rounded-2xl border border-white/12 p-4 sm:w-[60%] sm:p-6 shadow-2xl shadow-black/60 md:w-[min(26rem,40vw)] md:bg-ink/70 lg:w-[min(24rem,28vw)] md:p-8 md:backdrop-blur-md;
+    @apply bg-surface w-[66%] max-w-md rounded-2xl border border-line p-4 sm:w-[60%] sm:p-6 shadow-2xl shadow-black/60 md:w-[min(26rem,40vw)] md:bg-surface lg:w-[min(24rem,28vw)] md:p-8 md:backdrop-blur-md;
   }
 
   .category {
-    @apply text-xs font-medium tracking-widest text-white/65 uppercase;
+    @apply font-mono text-xs font-medium tracking-widest text-white/65 uppercase;
   }
 
   h3 {
@@ -185,6 +219,30 @@ nav {
     @apply mt-3 text-sm leading-relaxed text-white/80 md:text-base md:leading-relaxed;
   }
 
+  .problem {
+    @apply mt-3 text-sm leading-relaxed text-circuit md:text-base;
+  }
+
+  .metrics {
+    @apply mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line;
+
+    div {
+      @apply bg-ink/80 p-3;
+    }
+
+    dt {
+      @apply font-mono text-lg text-white md:text-xl;
+    }
+
+    dd {
+      @apply mt-1 text-xs leading-snug text-white/60;
+    }
+  }
+
+  .stack {
+    @apply mt-4 font-mono text-xs text-white/55;
+  }
+
   a {
     @apply mt-5 inline-block py-1 text-sm font-semibold underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white;
   }
@@ -193,7 +251,7 @@ nav {
 /* Solid background so the computer, released at the end of the projects
    section, scrolls away underneath. */
 #about {
-  @apply bg-ink relative z-10 w-full border-t border-white/10 py-28 md:py-36;
+  @apply bg-ink relative z-10 w-full py-28 md:py-36;
 
   .intro {
     @apply lg:sticky lg:top-32 lg:self-start;
@@ -236,7 +294,7 @@ nav {
   @apply bg-ink relative z-10 flex min-h-[80svh] w-full flex-col justify-between px-5 pt-32 pb-8;
   background-image: radial-gradient(
     ellipse 60% 45% at 50% 45%,
-    rgb(59 91 219 / 0.1),
+    rgb(63 216 255 / 0.1),
     transparent 70%
   );
 
@@ -245,7 +303,7 @@ nav {
   }
 
   .eyebrow {
-    @apply text-sm tracking-widest text-white/65 uppercase;
+    @apply font-mono text-sm tracking-widest text-white/65 uppercase;
   }
 
   h2 {
@@ -264,11 +322,199 @@ nav {
     }
 
     a:last-child {
-      @apply border-white bg-white text-black hover:bg-transparent hover:text-white;
+      @apply border-champagne bg-champagne text-black hover:bg-transparent hover:text-champagne;
     }
   }
 
   footer {
     @apply mt-24 text-center text-sm text-white/60;
+  }
+}
+
+.cursor {
+  @apply pointer-events-none fixed top-0 left-0 z-[70] -ml-4 -mt-4 size-8 rounded-full border border-circuit/70 opacity-0 transition-[opacity,scale] duration-300;
+
+  &[data-active="true"] {
+    @apply opacity-100;
+  }
+
+  &[data-hover="true"] {
+    @apply scale-150 bg-circuit/15;
+  }
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor {
+    display: none;
+  }
+}
+
+#lab {
+  @apply bg-ink relative z-10 w-full py-28 md:py-36;
+
+  .eyebrow {
+    @apply font-mono text-sm tracking-widest text-circuit uppercase;
+  }
+
+  h2 {
+    @apply font-display text-gradient mt-4 text-4xl leading-tight md:text-6xl;
+  }
+
+  .lead {
+    @apply mt-6 max-w-2xl leading-relaxed text-white/80 md:text-lg;
+  }
+
+  .stage {
+    @apply bg-surface border-line relative mt-12 aspect-[4/5] overflow-hidden rounded-2xl border sm:aspect-video;
+  }
+
+  .fallback {
+    @apply flex-center absolute inset-0 px-6 text-center text-white/70;
+  }
+
+  .hud {
+    @apply absolute inset-x-3 bottom-3 flex flex-wrap items-center gap-3 rounded-xl border border-line bg-ink/70 p-3 font-mono text-xs backdrop-blur-md md:inset-x-auto md:right-4 md:bottom-4 md:left-4;
+  }
+
+  .toggle {
+    @apply flex overflow-hidden rounded-full border border-line;
+
+    button {
+      @apply px-3 py-2 text-white/70 capitalize transition-colors;
+
+      &[aria-pressed="true"] {
+        @apply bg-circuit text-ink;
+      }
+    }
+  }
+
+  label {
+    @apply flex flex-1 items-center gap-3;
+
+    input {
+      @apply accent-circuit min-w-24 flex-1;
+    }
+
+    output {
+      @apply w-12 text-right text-white;
+    }
+  }
+
+  .dolly {
+    @apply border-champagne text-champagne hover:bg-champagne rounded-full border px-4 py-2 transition-colors hover:text-black disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-champagne;
+  }
+}
+
+/* Circuit traces that link the sections, drawn on scroll. */
+.divider {
+  @apply bg-ink relative z-10 h-14 w-full md:h-20;
+
+  svg {
+    @apply size-full;
+  }
+
+  .trace {
+    stroke: var(--color-circuit);
+    filter: drop-shadow(0 0 6px rgb(63 216 255 / 0.6));
+  }
+
+  .node {
+    fill: var(--color-circuit);
+  }
+
+  .amber {
+    stroke: var(--color-amber);
+    filter: drop-shadow(0 0 6px rgb(245 178 92 / 0.5));
+  }
+
+  circle.amber {
+    fill: var(--color-amber);
+    stroke: none;
+  }
+}
+
+#projects .preview-btn {
+  @apply mt-5 ml-4 inline-block py-1 text-sm font-semibold text-circuit underline decoration-circuit/40 underline-offset-4 transition-colors hover:decoration-circuit;
+}
+
+/* Live-preview flyout, rendered into <body>. */
+.flyout-backdrop {
+  @apply fixed inset-0 z-[60] flex justify-end bg-black/60 backdrop-blur-sm;
+  animation: fade-in 0.25s ease-out;
+}
+
+.flyout {
+  @apply bg-ink border-line flex h-full w-full flex-col border-l shadow-2xl shadow-black md:w-[min(64rem,85vw)];
+  animation: slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  header {
+    @apply border-line flex flex-wrap items-center justify-between gap-3 border-b p-4 md:px-6;
+
+    .eyebrow {
+      @apply font-mono text-xs tracking-widest text-circuit uppercase;
+    }
+
+    h3 {
+      @apply font-display text-xl md:text-2xl;
+    }
+
+    .actions {
+      @apply flex flex-wrap items-center gap-3 text-sm;
+    }
+
+    .actions > a {
+      @apply font-semibold text-white underline decoration-white/40 underline-offset-4 hover:decoration-white;
+    }
+
+    .toggle {
+      @apply hidden overflow-hidden rounded-full border border-line font-mono text-xs md:flex;
+
+      button {
+        @apply px-3 py-1.5 text-white/70;
+
+        &[aria-pressed="true"] {
+          @apply bg-circuit text-ink;
+        }
+      }
+    }
+
+    .close {
+      @apply border-line hover:border-white size-9 rounded-full border transition-colors;
+    }
+  }
+
+  .frame-wrap {
+    @apply relative flex flex-1 justify-center overflow-auto bg-white/5;
+  }
+
+  iframe {
+    @apply h-full max-w-full border-0 bg-white transition-[width] duration-300;
+  }
+
+  .status {
+    @apply absolute inset-0 flex-center text-sm text-white/60;
+  }
+
+  .hint {
+    @apply border-line border-t px-4 py-3 text-xs text-white/55 md:px-6;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    translate: 100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flyout-backdrop,
+  .flyout {
+    animation: none;
   }
 }

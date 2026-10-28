@@ -1,10 +1,17 @@
+import { useRef } from "react";
+import { useMagnetic } from "../hooks/useMagnetic";
+import { useMaskReveal } from "../hooks/useMaskReveal";
 import { contactLinks } from "../../constants/index.js";
 
 const year = new Date().getFullYear();
 
 const Contact = () => {
+  const ref = useRef();
+  useMagnetic(ref, "#contact .links a");
+  useMaskReveal(ref, "#contact h2");
+
   return (
-    <section id="contact">
+    <section id="contact" ref={ref}>
       <div className="content">
         <p className="eyebrow">Get in touch</p>
         <h2>Let&apos;s build something together</h2>
