@@ -17,7 +17,7 @@ const About = () => {
         <aside className="intro">
           <h2>About Me</h2>
 
-          <dl className="highlights">
+          <dl className="highlights glow-frames">
             {aboutHighlights.map(({ value, label }) => (
               <div key={label}>
                 <dt>{value}</dt>
