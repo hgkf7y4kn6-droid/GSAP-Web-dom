@@ -6,6 +6,7 @@ import Cursor from "./components/cursor";
 import Navbar from "./components/navbar";
 import Hero from "./components/hero";
 import Projects from "./components/projects";
+import Lab from "./components/lab";
 import About from "./components/about";
 import Contact from "./components/contact";
 
@@ -29,6 +30,7 @@ const App = () => {
       <main id="main" tabIndex={-1}>
         <Hero />
         <Projects />
+        <Lab />
         <About />
         <Contact />
       </main>

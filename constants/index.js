@@ -4,6 +4,10 @@ const navLinks = [
     title: "Projects",
   },
   {
+    id: "lab",
+    title: "Lab",
+  },
+  {
     id: "about",
     title: "About Me",
   },
