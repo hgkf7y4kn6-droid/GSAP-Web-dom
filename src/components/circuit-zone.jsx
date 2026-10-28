@@ -3,15 +3,13 @@ import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "react-responsive";
 
-// Wraps the closing sections in one ambient circuit-core film. Phones and
-// reduced-motion users get the still frame, and the film only plays while
-// this zone is on screen.
+// Wraps the closing sections in one ambient circuit-core film. It only plays
+// while this zone is on screen, and reduced-motion users get the still frame.
 const CircuitZone = ({ children }) => {
   const zoneRef = useRef();
   const videoRef = useRef();
-  const isMobile = useMediaQuery({ maxWidth: 767 });
   const reduced = useMediaQuery({ query: "(prefers-reduced-motion: reduce)" });
-  const still = isMobile || reduced;
+  const still = reduced;
 
   useGSAP(
     () => {

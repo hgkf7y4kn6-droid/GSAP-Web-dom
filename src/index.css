@@ -474,7 +474,7 @@ nav {
 
     video,
     img {
-      @apply size-full object-cover opacity-30;
+      @apply size-full object-cover opacity-55;
     }
 
     /* Keeps copy readable over the brightest parts of the film. */
@@ -482,8 +482,8 @@ nav {
       @apply absolute inset-0 content-[''];
       background: radial-gradient(
         ellipse 80% 70% at 50% 50%,
-        rgb(10 13 20 / 0.55),
-        rgb(10 13 20 / 0.9)
+        rgb(10 13 20 / 0.3),
+        rgb(10 13 20 / 0.82)
       );
     }
   }
