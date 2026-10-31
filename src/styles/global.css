@@ -1,8 +1,8 @@
 @import "tailwindcss";
 @import "@fontsource-variable/syne";
 @import "@fontsource-variable/inter-tight";
-@import "@fontsource/geist-mono/400.css";
-@import "@fontsource/geist-mono/500.css";
+@import "@fontsource/geist-mono/latin-400.css";
+@import "@fontsource/geist-mono/latin-500.css";
 
 @theme {
   --font-display: "Syne Variable", system-ui, sans-serif;
@@ -42,6 +42,11 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Cross-fade between pages in browsers that support it. No JavaScript. */
+@view-transition {
+  navigation: auto;
+}
+
 body {
   @apply bg-ink font-sans text-white antialiased;
   letter-spacing: 0.01em;
@@ -75,8 +80,9 @@ main:focus {
   @apply absolute top-4 left-4 z-[60] -translate-y-24 rounded-full bg-white px-5 py-2.5 font-semibold text-black transition-transform focus:translate-y-0;
 }
 
-nav {
+.site-nav {
   @apply fixed inset-x-0 top-0 z-50 isolate;
+  padding-top: env(safe-area-inset-top);
 
   /* The glass layer is always present; only its opacity animates. */
   &::before {
@@ -95,8 +101,9 @@ nav {
     @apply flex items-center gap-5 text-sm sm:gap-8 sm:text-base lg:gap-12;
   }
 
+  /* 44px tall touch targets. */
   ul a {
-    @apply block py-2 text-white/85 transition-colors hover:text-white;
+    @apply flex min-h-11 items-center text-white/85 transition-colors hover:text-white;
   }
 }
 
@@ -109,10 +116,29 @@ nav {
     transparent 70%
   );
 
-  /* The computer film loops quietly behind the hero copy. */
-  .hero-loop {
-    @apply pointer-events-none absolute inset-0 -z-10 size-full object-cover opacity-60;
-    mask-image: radial-gradient(ellipse 70% 65% at 50% 55%, #000 55%, transparent 100%);
+  /* The live 3D scene, with a still of it underneath until it has drawn. */
+  .hero-poster,
+  .hero-canvas {
+    @apply pointer-events-none absolute inset-0 -z-10 size-full;
+    mask-image: radial-gradient(ellipse 75% 70% at 50% 55%, #000 55%, transparent 100%);
+  }
+
+  .hero-poster {
+    @apply object-cover opacity-80 transition-opacity duration-700;
+  }
+
+  .hero-canvas {
+    @apply opacity-0 transition-opacity duration-1000;
+  }
+
+  &[data-scene="ready"] {
+    .hero-poster {
+      @apply opacity-0;
+    }
+
+    .hero-canvas {
+      @apply opacity-100;
+    }
   }
 
   .title {
@@ -142,7 +168,7 @@ nav {
       @apply font-display text-4xl leading-tight lg:text-5xl;
     }
 
-    .view-cocktails {
+    .intro {
       @apply w-full space-y-4 text-base md:max-w-xs lg:max-w-2xs;
 
       .subtitle {
@@ -150,39 +176,39 @@ nav {
       }
 
       a {
-        @apply inline-block py-1 font-semibold underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white;
+        @apply inline-flex min-h-11 items-center font-semibold underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white;
       }
     }
   }
 }
 
-/* Project cards alternate down either side. */
+/* Project cards stack full width on phones, then alternate down either side
+   from tablet up. */
 #projects {
-  @apply relative w-full overflow-x-clip pt-[15svh] pb-[15svh];
+  @apply relative w-full overflow-x-clip pt-[12svh] pb-[10svh] md:pt-[15svh] md:pb-[15svh];
 
   .list {
-    @apply relative z-10 container mx-auto px-5;
+    @apply relative z-10 container mx-auto flex flex-col gap-16 px-5 md:gap-0;
   }
 
   li {
-    @apply flex min-h-[75svh] items-start md:min-h-[65svh];
+    @apply flex items-start md:min-h-[65svh];
   }
 
-  /* Odd cards sit on the right. */
   li:nth-child(even) {
-    @apply justify-end;
+    @apply md:justify-end;
   }
+}
 
-  .card {
-    @apply bg-surface w-[66%] max-w-md rounded-2xl border border-line p-4 sm:w-[60%] sm:p-6 shadow-2xl shadow-black/60 md:w-[min(26rem,40vw)] md:bg-surface lg:w-[min(24rem,28vw)] md:p-8 md:backdrop-blur-md;
-  }
+.card {
+  @apply bg-surface w-full rounded-2xl border border-line p-5 shadow-2xl shadow-black/60 sm:p-6 md:w-[min(26rem,40vw)] md:p-8 md:backdrop-blur-md lg:w-[min(24rem,28vw)];
 
-  .category {
-    @apply font-mono text-xs font-medium tracking-widest text-white/65 uppercase;
-  }
+  .name {
+    @apply font-display mt-2 text-2xl leading-tight md:mt-3 md:text-3xl;
 
-  h3 {
-    @apply font-display mt-2 text-xl leading-tight md:mt-3 md:text-3xl;
+    a {
+      @apply decoration-circuit/60 underline-offset-4 hover:underline;
+    }
   }
 
   .summary {
@@ -194,32 +220,53 @@ nav {
   }
 
   .metrics {
-    @apply mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line;
-
-    div {
-      @apply bg-ink/80 p-3;
-    }
-
-    dt {
-      @apply font-mono text-lg text-white md:text-xl;
-    }
-
-    dd {
-      @apply mt-1 text-xs leading-snug text-white/60;
-    }
+    @apply mt-4;
   }
 
   .stack {
     @apply mt-4 font-mono text-xs text-white/55;
   }
 
-  a {
-    @apply mt-5 inline-block py-1 text-sm font-semibold underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white;
+  .actions {
+    @apply mt-4 flex flex-wrap items-center gap-x-5;
+  }
+
+  .actions a,
+  .actions button {
+    @apply inline-flex min-h-11 items-center text-sm font-semibold underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white;
+  }
+
+  .actions .primary {
+    @apply text-champagne decoration-champagne/50 hover:decoration-champagne;
+  }
+
+  .actions .preview-btn {
+    @apply text-circuit decoration-circuit/40 hover:decoration-circuit;
   }
 }
 
-/* Solid background so the computer, released at the end of the projects
-   section, scrolls away underneath. */
+.category {
+  @apply font-mono text-xs font-medium tracking-widest text-white/65 uppercase;
+}
+
+/* Columns fit the number of metrics, so one or two never leave an empty cell. */
+.metrics {
+  @apply grid gap-px overflow-hidden rounded-xl border border-line bg-line;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+
+  div {
+    @apply bg-ink/80 p-3;
+  }
+
+  dt {
+    @apply font-mono text-lg text-white md:text-xl;
+  }
+
+  dd {
+    @apply mt-1 text-xs leading-snug text-white/60;
+  }
+}
+
 #about {
   @apply relative z-10 w-full overflow-x-clip py-28 md:py-36;
 
@@ -347,19 +394,19 @@ nav {
   }
 }
 
-#projects .preview-btn {
-  @apply mt-5 ml-4 inline-block py-1 text-sm font-semibold text-circuit underline decoration-circuit/40 underline-offset-4 transition-colors hover:decoration-circuit;
-}
-
-/* Live-preview flyout, rendered into <body>. */
-.flyout-backdrop {
-  @apply fixed inset-0 z-[60] flex justify-end bg-black/60 backdrop-blur-sm;
-  animation: fade-in 0.25s ease-out;
-}
-
+/* Live-preview flyout: a native modal <dialog> pinned to the right edge. */
 .flyout {
-  @apply bg-ink border-line flex h-full w-full flex-col border-l shadow-2xl shadow-black md:w-[min(64rem,85vw)];
-  animation: slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  @apply bg-ink border-line m-0 ml-auto h-dvh max-h-none w-full max-w-none flex-col border-l p-0 text-white shadow-2xl shadow-black md:w-[min(64rem,85vw)];
+
+  &[open] {
+    @apply flex;
+    animation: slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  &::backdrop {
+    @apply bg-black/60 backdrop-blur-sm;
+    animation: fade-in 0.25s ease-out;
+  }
 
   header {
     @apply border-line flex flex-wrap items-center justify-between gap-3 border-b p-4 md:px-6;
@@ -368,7 +415,7 @@ nav {
       @apply font-mono text-xs tracking-widest text-circuit uppercase;
     }
 
-    h3 {
+    h2 {
       @apply font-display text-xl md:text-2xl;
     }
 
@@ -377,7 +424,7 @@ nav {
     }
 
     .actions > a {
-      @apply font-semibold text-white underline decoration-white/40 underline-offset-4 hover:decoration-white;
+      @apply inline-flex min-h-11 items-center font-semibold text-white underline decoration-white/40 underline-offset-4 hover:decoration-white;
     }
 
     .toggle {
@@ -393,7 +440,7 @@ nav {
     }
 
     .close {
-      @apply border-line hover:border-white size-9 rounded-full border transition-colors;
+      @apply border-line hover:border-white size-11 rounded-full border transition-colors;
     }
   }
 
@@ -427,8 +474,8 @@ nav {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .flyout-backdrop,
-  .flyout {
+  .flyout[open],
+  .flyout::backdrop {
     animation: none;
   }
 }
@@ -478,5 +525,144 @@ nav {
 
   &:hover::after {
     @apply opacity-30;
+  }
+}
+
+/* Case-study pages. */
+.case-head {
+  @apply relative z-10 pt-28 pb-12 md:pt-40 md:pb-16;
+
+  .back {
+    @apply mb-8 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-white/75 transition-colors hover:text-white;
+  }
+
+  h1 {
+    @apply font-display text-gradient mt-3 text-5xl leading-none sm:text-6xl md:text-8xl;
+  }
+
+  .problem {
+    @apply text-circuit mt-6 max-w-3xl text-xl leading-snug md:text-2xl;
+  }
+
+  .metrics {
+    @apply mt-12 max-w-3xl;
+
+    div {
+      @apply p-4 md:p-5;
+    }
+
+    dt {
+      @apply text-xl md:text-2xl;
+    }
+
+    dd {
+      @apply text-sm;
+    }
+  }
+}
+
+.case-body {
+  @apply relative z-10 grid gap-12 py-12 md:py-20 lg:grid-cols-[1.6fr_1fr] lg:gap-20;
+}
+
+.case-aside {
+  @apply flex flex-col gap-10 lg:sticky lg:top-28 lg:self-start;
+
+  h2 {
+    @apply font-mono text-xs tracking-widest text-white/60 uppercase;
+  }
+
+  .stack-list {
+    @apply mt-4 flex flex-wrap gap-2;
+
+    li {
+      @apply bg-surface rounded-full border border-line px-3.5 py-1.5 font-mono text-sm text-white/85;
+    }
+  }
+
+  .case-links {
+    @apply mt-4 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap lg:flex-col;
+
+    a,
+    button {
+      @apply inline-flex min-h-11 items-center rounded-full border border-white/40 px-6 font-semibold transition-colors hover:border-white hover:bg-white hover:text-black;
+    }
+
+    .primary {
+      @apply border-champagne bg-champagne text-black hover:text-champagne hover:bg-transparent;
+    }
+  }
+}
+
+/* Long-form copy written in Markdown. */
+.prose {
+  @apply max-w-2xl text-base leading-relaxed text-white/80 md:text-lg md:leading-relaxed;
+
+  > * + * {
+    @apply mt-5;
+  }
+
+  h2 {
+    @apply font-display mt-12 text-2xl leading-tight text-white first:mt-0 md:text-3xl;
+  }
+
+  h3 {
+    @apply font-display mt-8 text-xl text-white;
+  }
+
+  strong {
+    @apply font-semibold text-white;
+  }
+
+  a {
+    @apply text-circuit underline decoration-circuit/40 underline-offset-4 hover:decoration-circuit;
+  }
+
+  ul {
+    @apply space-y-3 pl-5;
+  }
+
+  li {
+    @apply marker:text-circuit list-disc pl-1;
+  }
+
+  code {
+    @apply rounded bg-white/10 px-1.5 py-0.5 font-mono text-sm;
+  }
+}
+
+.case-pager {
+  @apply relative z-10 grid gap-4 pb-16 sm:grid-cols-2;
+
+  a {
+    @apply bg-surface flex flex-col gap-1 rounded-2xl border border-line p-5 transition-colors hover:border-circuit/60 md:p-6;
+  }
+
+  .next {
+    @apply sm:items-end sm:text-right;
+  }
+
+  .label {
+    @apply font-mono text-xs tracking-widest text-white/60 uppercase;
+  }
+
+  .name {
+    @apply font-display text-xl text-white md:text-2xl;
+  }
+}
+
+.not-found {
+  @apply relative z-10 mx-auto flex min-h-svh max-w-xl flex-col items-start justify-center gap-4 px-5;
+
+  h1 {
+    @apply font-display text-gradient text-5xl leading-tight md:text-6xl;
+  }
+
+  p:not(.category) {
+    @apply text-white/80;
+  }
+
+  a {
+    @apply inline-flex min-h-11 items-center font-semibold underline decoration-white/40 underline-offset-4 hover:decoration-white;
   }
 }

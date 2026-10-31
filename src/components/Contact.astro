@@ -1,0 +1,29 @@
+---
+import { contactLinks } from "../data/site.js";
+
+const year = new Date().getFullYear();
+const { heading = "Let's build something together" } = Astro.props;
+---
+
+<section id="contact">
+  <div class="content">
+    <p class="eyebrow">Get in touch</p>
+    <h2 data-reveal>{heading}</h2>
+    <p class="lead">
+      Have a project in mind or want to talk about agentic AI? Connect with me
+      on LinkedIn or book a time that suits you.
+    </p>
+
+    <div class="links">
+      {
+        contactLinks.map(({ label, url }) => (
+          <a href={url} target="_blank" rel="noopener noreferrer" data-magnetic>
+            {label} ↗
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <footer>© {year} Riches Digital Ventures</footer>
+</section>

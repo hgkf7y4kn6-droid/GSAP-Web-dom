@@ -1,0 +1,53 @@
+---
+import HeroScene from "./HeroScene.jsx";
+---
+
+<section id="hero">
+  <!-- A still of the 3D scene shows first, and stays for devices that skip it. -->
+  <img
+    class="hero-poster"
+    src="/images/hero-scene.webp"
+    alt=""
+    width="1600"
+    height="1000"
+    fetchpriority="low"
+    decoding="async"
+    aria-hidden="true"
+  />
+  <HeroScene client:only="react" />
+
+  <h1 class="title">Riches Digital Ventures</h1>
+
+  <svg
+    class="arrow"
+    viewBox="0 0 16 112"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    aria-hidden="true"
+  >
+    <path d="M8 0v110M1 103l7 7 7-7"></path>
+  </svg>
+
+  <div class="body">
+    <div class="content">
+      <div class="tagline">
+        <p>Move faster. Build smarter. Design bolder.</p>
+        <p class="subtitle">Applied <br /> Agentic AI</p>
+      </div>
+
+      <div class="intro">
+        <p class="subtitle">
+          Every project on my site is a blend of using modern tools, knowledge
+          from my certification and independent learning, creative flair, and
+          developed solely by me.
+        </p>
+        <a href="#projects" data-magnetic="0.2">View projects</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "../scripts/hero.js";
+</script>

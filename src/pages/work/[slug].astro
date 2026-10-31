@@ -1,0 +1,122 @@
+---
+import { getEntry, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Divider from "../../components/Divider.astro";
+import Contact from "../../components/Contact.astro";
+import PreviewDialog from "../../components/PreviewDialog.astro";
+import { projects } from "../../data/site.js";
+
+export const getStaticPaths = () =>
+  projects.map((project, i) => ({
+    params: { slug: project.slug },
+    props: {
+      project,
+      prev: projects[(i - 1 + projects.length) % projects.length],
+      next: projects[(i + 1) % projects.length],
+    },
+  }));
+
+const { project, prev, next } = Astro.props;
+const {
+  name,
+  status,
+  problem,
+  summary,
+  metrics = [],
+  stack = [],
+  url,
+  linkLabel = "View repo",
+  preview = false,
+} = project;
+
+// The write-up is optional: without one, the page falls back to the summary.
+const entry = await getEntry("work", project.slug);
+const { Content } = entry ? await render(entry) : { Content: null };
+---
+
+<Base title={`${name} | Riches Digital Ventures`} description={summary}>
+  <article class="case">
+    <header class="case-head">
+      <div class="container mx-auto px-5">
+        <a href="/#projects" class="back">
+          <span aria-hidden="true">←</span> All projects
+        </a>
+        <p class="category">{status}</p>
+        <h1 data-reveal>{name}</h1>
+        {problem && <p class="problem">{problem}</p>}
+
+        {
+          metrics.length > 0 && (
+            <dl class="metrics glow-frames">
+              {metrics.map(({ value, label }) => (
+                <div>
+                  <dt>{value}</dt>
+                  <dd>{label}</dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
+      </div>
+    </header>
+
+    <Divider />
+
+    <div class="case-body container mx-auto px-5">
+      <div class="prose">
+        {Content ? <Content /> : <p>{summary}</p>}
+      </div>
+
+      <aside class="case-aside" aria-label="Project details">
+        {
+          stack.length > 0 && (
+            <section>
+              <h2>Built with</h2>
+              <ul class="stack-list">
+                {stack.map((tech) => (
+                  <li>{tech}</li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+        <section>
+          <h2>Links</h2>
+          <div class="case-links">
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="primary"
+              data-magnetic="0.2"
+            >
+              {linkLabel} ↗
+            </a>
+            {
+              preview && (
+                <button type="button" data-preview-url={url} data-preview-name={name}>
+                  Live preview
+                </button>
+              )
+            }
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <nav class="case-pager container mx-auto px-5" aria-label="More projects">
+      <a href={`/work/${prev.slug}/`} rel="prev">
+        <span class="label"><span aria-hidden="true">←</span> Previous</span>
+        <span class="name">{prev.name}</span>
+      </a>
+      <a href={`/work/${next.slug}/`} rel="next" class="next">
+        <span class="label">Next <span aria-hidden="true">→</span></span>
+        <span class="name">{next.name}</span>
+      </a>
+    </nav>
+  </article>
+
+  <Divider flip />
+  <Contact heading="Have a problem like this?" />
+  {preview && <PreviewDialog />}
+</Base>

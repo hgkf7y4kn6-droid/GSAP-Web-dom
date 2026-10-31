@@ -1,3 +1,4 @@
+// Section links on the home page. Other pages prefix them with "/".
 const navLinks = [
   {
     id: "projects",
@@ -17,6 +18,7 @@ const navLinks = [
 const projects = [
   {
     name: "Pool PM",
+    slug: "pool-pm",
     status: "Live",
     problem: "Pool builders juggle jobs from lead to warranty, often offline.",
     stack: ["Expo", "React Native", "Fastify", "PostgreSQL", "Redis"],
@@ -29,6 +31,7 @@ const projects = [
   },
   {
     name: "KaventaFi",
+    slug: "kaventafi",
     status: "Live · in progress",
     problem: "Subscriptions and spending drift unnoticed across accounts.",
     stack: ["Expo", "React Native", "FastAPI", "Plaid"],
@@ -41,6 +44,7 @@ const projects = [
   },
   {
     name: "Riches Analytics",
+    slug: "riches-analytics",
     status: "Live",
     problem: "Weekly DFS lineup decisions rely on gut feel and scattered data.",
     stack: ["Python", "FastAPI"],
@@ -56,6 +60,7 @@ const projects = [
   },
   {
     name: "VectorSales",
+    slug: "vectorsales",
     status: "Deployed",
     problem: "Shoppers can't easily compare options on true cost per use.",
     stack: ["FastAPI", "CLIP", "FAISS", "OCR"],
@@ -66,6 +71,7 @@ const projects = [
   },
   {
     name: "News Agent",
+    slug: "news-agent",
     status: "Open source",
     problem: "Staying current means checking dozens of sources by hand.",
     stack: ["Cloudflare Workers", "Vectorize", "Gemini"],
@@ -79,6 +85,7 @@ const projects = [
   },
   {
     name: "AegisTriage",
+    slug: "aegistriage",
     status: "Capstone",
     problem: "Routine patient requests tie up staff across several systems.",
     stack: ["Python", "CrewAI", "Webhook API"],
@@ -89,6 +96,7 @@ const projects = [
   },
   {
     name: "VeraPlex",
+    slug: "veraplex",
     status: "In development",
     problem: "Pharma quality teams need software regulators will trust, not just fast software.",
     stack: ["Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic"],

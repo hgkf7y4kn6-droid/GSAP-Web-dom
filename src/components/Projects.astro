@@ -1,0 +1,18 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+import { projects } from "../data/site.js";
+---
+
+<section id="projects" aria-labelledby="projects-heading">
+  <h2 id="projects-heading" class="sr-only">Projects</h2>
+
+  <ul class="list">
+    {
+      projects.map((project, i) => (
+        <li>
+          <ProjectCard project={project} side={i % 2 === 0 ? "left" : "right"} />
+        </li>
+      ))
+    }
+  </ul>
+</section>

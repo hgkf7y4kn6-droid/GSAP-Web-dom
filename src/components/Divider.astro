@@ -1,0 +1,22 @@
+---
+// A circuit trace that draws itself on scroll, echoing the circuit-core film.
+const { flip = false } = Astro.props;
+---
+
+<div class="divider" aria-hidden="true">
+  <svg
+    viewBox="0 0 1200 80"
+    preserveAspectRatio="none"
+    fill="none"
+    stroke-width="1.5"
+    vector-effect="non-scaling-stroke"
+    style={flip ? "transform: scaleX(-1)" : undefined}
+  >
+    <path class="trace" d="M0 40H300L330 20H620L650 60H900L930 40H1200"></path>
+    <path class="trace amber" d="M0 52H180L200 62H460L480 40H760L780 28H1040L1060 52H1200"></path>
+    <circle class="node" cx="330" cy="20" r="3"></circle>
+    <circle class="node" cx="650" cy="60" r="3"></circle>
+    <circle class="node amber" cx="480" cy="40" r="3"></circle>
+    <circle class="node amber" cx="1040" cy="28" r="3"></circle>
+  </svg>
+</div>

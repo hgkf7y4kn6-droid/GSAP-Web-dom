@@ -1,16 +1,46 @@
-# React + Vite
+# Riches Digital Ventures
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Portfolio site for Riches Digital Ventures, built with [Astro](https://astro.build).
+Pages are static HTML. JavaScript is added only where it earns its place.
 
-Currently, two official plugins are available:
+## Commands
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```sh
+npm install
+npm run dev      # local dev server at http://localhost:4321
+npm run build    # static site in dist/
+npm run preview  # serve the built site
+npm run lint     # oxlint
+```
 
-## React Compiler
+## Structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```
+src/
+  data/site.js          Projects, nav, about and contact copy (single source of truth)
+  content/work/*.md     Case-study write-ups, one per project slug
+  pages/index.astro     Home page
+  pages/work/[slug]     Case-study pages, generated from site.js
+  components/           Astro sections, plus the React 3D hero island
+  scripts/              GSAP, ScrollTrigger and Lenis behaviour for the static HTML
+  styles/global.css     Tailwind v4 theme tokens and component styles
+```
 
-## Expanding the Oxlint configuration
+### Adding a project
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+1. Add an entry with a unique `slug` to `projects` in `src/data/site.js`.
+2. Optionally add `src/content/work/<slug>.md` for the long-form write-up. Without
+   one, the case-study page falls back to the project summary.
+
+## Performance choices
+
+- **3D hero.** React Three Fiber and Drei render the circuit-core scene. A still of
+  the scene (`public/images/hero-scene.webp`) shows first. three.js is only
+  downloaded on devices with WebGL, at least 4 GB of memory and Data Saver off,
+  and the scene stops rendering once it is scrolled out of view. Reduced-motion
+  visitors get a still render.
+- **Motion.** GSAP runs as small bundled scripts, with no React needed. Lenis smooth
+  scrolling is limited to mouse and trackpad users who haven't asked for reduced motion.
+- **Mobile.** Cards stack full width on phones, every tap target is at least 44px, and
+  touch devices keep native scrolling.
+- **Fonts.** Latin subsets only, with the display and body fonts preloaded.

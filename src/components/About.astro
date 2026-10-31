@@ -1,0 +1,32 @@
+---
+import { aboutClosing, aboutHighlights, aboutParagraphs } from "../data/site.js";
+
+const [lead, ...body] = aboutParagraphs;
+---
+
+<section id="about">
+  <div class="container mx-auto grid gap-12 px-5 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+    <aside class="intro">
+      <h2 data-reveal>About Me</h2>
+
+      <dl class="highlights glow-frames">
+        {
+          aboutHighlights.map(({ value, label }) => (
+            <div>
+              <dt>{value}</dt>
+              <dd>{label}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </aside>
+
+    <div class="bio">
+      <p class="lead">{lead}</p>
+      {body.map((paragraph) => <p>{paragraph}</p>)}
+      <p class="closing">
+        <a href="#contact">{aboutClosing}</a>
+      </p>
+    </div>
+  </div>
+</section>

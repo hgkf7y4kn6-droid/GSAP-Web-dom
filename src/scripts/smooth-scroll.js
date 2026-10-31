@@ -1,11 +1,11 @@
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 
 let lenis = null;
 
 // Inertial scroll for fine pointers only. Touch devices keep native scrolling,
-// which is what keeps the pinned, scrubbed video smooth on phones.
+// which feels right under a finger and keeps scroll animations smooth.
 export const startSmoothScroll = () => {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = window.matchMedia("(pointer: fine)").matches;

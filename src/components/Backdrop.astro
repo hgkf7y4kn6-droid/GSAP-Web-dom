@@ -1,0 +1,39 @@
+---
+// The circuit-core film, fixed behind every section. Pages that are mostly
+// reading get the still frame, and so do reduced-motion visitors.
+const { video = false } = Astro.props;
+---
+
+<div class="circuit-backdrop" aria-hidden="true">
+  {
+    video ? (
+      <video
+        poster="/images/circuit-core-poster.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        data-backdrop-video
+      >
+        <source src="/videos/circuit-core.webm" type="video/webm" />
+        <source src="/videos/circuit-core.mp4" type="video/mp4" />
+      </video>
+    ) : (
+      <img src="/images/circuit-core-poster.jpg" alt="" decoding="async" />
+    )
+  }
+</div>
+
+<script>
+  // Swap the film for its poster when motion is reduced or data is scarce.
+  const video = document.querySelector<HTMLVideoElement>("[data-backdrop-video]");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const saveData = (navigator as any).connection?.saveData;
+  if (video && (reduced || saveData)) {
+    video.removeAttribute("autoplay");
+    video.pause();
+    video.querySelectorAll("source").forEach((s) => s.remove());
+    video.load();
+  }
+</script>

@@ -1,0 +1,41 @@
+---
+// A single slide-in dialog that frames any project's live site. Opened by
+// buttons carrying data-preview-url and data-preview-name.
+---
+
+<dialog id="preview" class="flyout" aria-label="Live preview" data-lenis-prevent>
+  <header>
+    <div>
+      <p class="eyebrow">Live preview</p>
+      <h2></h2>
+    </div>
+
+    <div class="actions">
+      <div role="group" aria-label="Preview size" class="toggle">
+        <button type="button" data-size="desktop" aria-pressed="true">Desktop</button>
+        <button type="button" data-size="mobile" aria-pressed="false">Mobile</button>
+      </div>
+      <a href="#" data-external target="_blank" rel="noopener noreferrer">Open in new tab ↗</a>
+      <button type="button" class="close" aria-label="Close preview" autofocus>✕</button>
+    </div>
+  </header>
+
+  <div class="frame-wrap">
+    <p class="status">Loading preview…</p>
+    <iframe
+      title="Live site"
+      src="about:blank"
+      sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+      referrerpolicy="no-referrer"
+      loading="lazy"></iframe>
+  </div>
+
+  <p class="hint">
+    Preview blank or refused? The site may not allow embedding. Use &ldquo;Open
+    in new tab&rdquo; above.
+  </p>
+</dialog>
+
+<script>
+  import "../scripts/preview.js";
+</script>

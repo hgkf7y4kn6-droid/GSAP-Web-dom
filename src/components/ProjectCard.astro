@@ -1,0 +1,65 @@
+---
+// One project summary. Headline links go to the case study; the external link
+// and live preview sit alongside it.
+const { project, side = "left", headingLevel = 3 } = Astro.props;
+const {
+  name,
+  slug,
+  summary,
+  url,
+  status,
+  problem,
+  metrics = [],
+  stack = [],
+  linkLabel = "View repo",
+  preview = false,
+} = project;
+const Heading = `h${headingLevel}`;
+---
+
+<article class="card glow-frames" data-slide={side}>
+  <p class="category">{status}</p>
+  <Heading class="name">
+    <a href={`/work/${slug}/`}>{name}</a>
+  </Heading>
+  {problem && <p class="problem">{problem}</p>}
+  <p class="summary">{summary}</p>
+  {
+    metrics.length > 0 && (
+      <dl class="metrics">
+        {metrics.map(({ value, label }) => (
+          <div>
+            <dt>{value}</dt>
+            <dd>{label}</dd>
+          </div>
+        ))}
+      </dl>
+    )
+  }
+  {stack.length > 0 && <p class="stack">{stack.join(" · ")}</p>}
+  <div class="actions">
+    <a href={`/work/${slug}/`} class="primary" data-magnetic="0.2">
+      Case study <span aria-hidden="true">→</span>
+    </a>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${linkLabel}: ${name} (opens in a new tab)`}
+    >
+      {linkLabel} ↗
+    </a>
+    {
+      preview && (
+        <button
+          type="button"
+          class="preview-btn"
+          data-preview-url={url}
+          data-preview-name={name}
+        >
+          Live preview
+        </button>
+      )
+    }
+  </div>
+</article>

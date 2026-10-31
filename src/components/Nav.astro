@@ -1,0 +1,26 @@
+---
+import { navLinks } from "../data/site.js";
+
+// Section links jump in place on the home page and route home from elsewhere.
+const onHome = Astro.url.pathname === "/";
+const prefix = onHome ? "" : "/";
+---
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="container mx-auto flex items-center justify-between gap-4 px-5 py-3 md:py-4">
+    <a href={onHome ? "#hero" : "/"} class="brand">
+      <img src="/logo.png" alt="" width="36" height="36" class="size-9" />
+      <span class="sr-only sm:not-sr-only">Riches Digital Ventures</span>
+    </a>
+
+    <ul>
+      {
+        navLinks.map((link) => (
+          <li>
+            <a href={`${prefix}#${link.id}`}>{link.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
