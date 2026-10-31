@@ -24,8 +24,8 @@ const projectLists = [
     ],
     summary:
       "Live sports analytics site that runs Monte Carlo simulations on NFL games, alongside real DraftKings salaries and Sleeper projections. Python and FastAPI.",
-    url: "https://dfsriches.richesdigitalventures.com",
-    linkLabel: "Visit site",
+    site: "https://dfsriches.richesdigitalventures.com",
+    repo: "https://github.com/hgkf7y4kn6-droid/DFS-Riches",
     preview: true,
   },
   {
@@ -35,8 +35,8 @@ const projectLists = [
     metrics: [{ value: "Plaid", label: "Bank account connections" }],
     summary:
       "Personal finance app for tracking subscriptions and spending insights. Expo / React Native with a FastAPI backend that connects bank accounts through Plaid.",
-    url: "https://mmm.richesdigitalventures.com",
-    linkLabel: "Visit site",
+    site: "https://mmm.richesdigitalventures.com",
+    repo: "https://github.com/hgkf7y4kn6-droid/MMM",
     preview: true,
   },
   {
@@ -46,7 +46,7 @@ const projectLists = [
     metrics: [{ value: "4", label: "Workflows: refills, EHR, scheduling, tickets" }],
     summary:
       "Multi-agent healthcare assistant that handles prescription refills, EHR lookups, scheduling and support tickets. Python, CrewAI and a webhook API.",
-    url: "https://github.com/hgkf7y4kn6-droid/Capstone-Healthcare-Agent",
+    repo: "https://github.com/hgkf7y4kn6-droid/Capstone-Healthcare-Agent",
   },
 ];
 
@@ -58,7 +58,7 @@ const lovedProjects = [
     metrics: [{ value: "3", label: "Tiers: good, better, best" }],
     summary:
       "Good / better / best product matching that compares options on cost per use. FastAPI with CLIP, FAISS and OCR, deployed on Render and Cloudflare.",
-    url: "https://github.com/hgkf7y4kn6-droid/Cost-Comparison-Tool",
+    repo: "https://github.com/hgkf7y4kn6-droid/Cost-Comparison-Tool",
   },
   {
     name: "Pool PM",
@@ -67,8 +67,8 @@ const lovedProjects = [
     metrics: [{ value: "Offline", label: "First, lead to warranty" }],
     summary:
       "Offline-first project management for pool builders, from lead to warranty. Expo / React Native app with a Fastify, PostgreSQL and Redis API.",
-    url: "https://pool.richesdigitalventures.com",
-    linkLabel: "Visit site",
+    site: "https://pool.richesdigitalventures.com",
+    repo: "https://github.com/hgkf7y4kn6-droid/Pool-Project-Workflow",
     preview: true,
   },
   {
@@ -81,7 +81,7 @@ const lovedProjects = [
     ],
     summary:
       "Personal news reader across 62 sources with an AI chat assistant that answers with citations. Cloudflare Workers, Vectorize and Gemini.",
-    url: "https://github.com/hgkf7y4kn6-droid/news-agent",
+    repo: "https://github.com/hgkf7y4kn6-droid/news-agent",
   },
 ];
 
