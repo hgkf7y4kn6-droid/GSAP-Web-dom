@@ -25,6 +25,111 @@
   --color-focus: #3fd8ff;
 
   --blur-glass: 16px;
+
+  /* Motion with weight. Lifting overcomes inertia: a slow start, a fast
+     middle, a gentle stop. Dropping is pulled by gravity: it accelerates
+     into the surface and stops dead, which reads as a soft thud. */
+  --ease-lift: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-drop: cubic-bezier(0.55, 0, 0.85, 0.35);
+  /* A pressed button springs back past its rest point, then settles. */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-follow: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Registered so the browser can ease them. Each one drives part of the
+   .weighted transform or shadow, so each can have its own timing. */
+@property --lift {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --press {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --elev {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
+@property --rx {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --ry {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* Physical weight and elevation.
+   --lift  0 resting on the canvas, 1 held 12px above it (hover)
+   --press 0 released, 1 compressed (click or tap)
+   --elev  0 flat on the canvas, 1 at its resting height (scroll-in, set by GSAP)
+   --rx/ry tilt toward the pointer (set by src/lib/weight.js)
+   The shadow is built from the same values, so height and shadow always
+   agree: higher means a larger, softer, fainter shadow, as if nearer the
+   light and farther from the table. */
+.weighted {
+  transform: perspective(1000px)
+    translate3d(0, calc(var(--lift) * -12px), 0)
+    rotateX(var(--rx)) rotateY(var(--ry))
+    scale(calc(1 + var(--lift) * 0.012 - var(--press) * 0.025));
+  box-shadow:
+    /* Contact shadow: tight and dark where the card meets the canvas. */
+    0 calc(1px + var(--lift) * 3px) calc(2px + var(--lift) * 6px)
+      rgb(0 0 0 / calc((0.5 - var(--lift) * 0.3) * var(--elev))),
+    /* Ambient shadow: grows and softens with height. */
+    0 calc((6px + var(--lift) * 26px) * var(--elev))
+      calc((18px + var(--lift) * 46px) * var(--elev))
+      calc(var(--lift) * -6px)
+      rgb(0 0 0 / calc((0.55 - var(--lift) * 0.15) * var(--elev)));
+  /* Resting state: falling back down, faster than it rose. */
+  transition:
+    --lift 0.34s var(--ease-drop),
+    --press 0.45s var(--ease-spring),
+    --rx 0.6s var(--ease-follow),
+    --ry 0.6s var(--ease-follow);
+
+  @media (hover: hover) {
+    &:hover {
+      --lift: 1;
+      will-change: transform;
+      /* Rising: a slow, deliberate lift. The tilt follows the cursor with
+         a short lag, which is what gives it mass. */
+      transition:
+        --lift 0.6s var(--ease-lift),
+        --press 0.45s var(--ease-spring),
+        --rx 0.35s var(--ease-follow),
+        --ry 0.35s var(--ease-follow);
+    }
+  }
+
+  /* Squish the instant it is pressed, then spring back on release. */
+  &:active {
+    --press: 1;
+    transition:
+      --lift 0.6s var(--ease-lift),
+      --press 0.08s ease-out,
+      --rx 0.35s var(--ease-follow),
+      --ry 0.35s var(--ease-follow);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &,
+    &:hover,
+    &:active {
+      --lift: 0;
+      --press: 0;
+      transition: none;
+    }
+  }
 }
 
 @utility flex-center {
@@ -173,8 +278,13 @@ nav {
     @apply justify-end;
   }
 
+  /* The parallax layer carries the card's width so the card can fill it. */
+  .float {
+    @apply w-[66%] max-w-md sm:w-[60%] md:w-[min(26rem,40vw)] lg:w-[min(24rem,28vw)];
+  }
+
   .card {
-    @apply bg-surface w-[66%] max-w-md rounded-2xl border border-line p-4 sm:w-[60%] sm:p-6 shadow-2xl shadow-black/60 md:w-[min(26rem,40vw)] md:bg-surface lg:w-[min(24rem,28vw)] md:p-8 md:backdrop-blur-md;
+    @apply bg-surface w-full rounded-2xl border border-line p-4 sm:p-6 md:bg-surface md:p-8 md:backdrop-blur-md;
   }
 
   .category {
@@ -213,7 +323,102 @@ nav {
     @apply mt-4 font-mono text-xs text-white/55;
   }
 
-  a {
+  .card {
+    cursor: pointer;
+  }
+
+  /* The title link stretches over the whole card. The card is already
+     position: relative (from .glow-frames), so inset-0 fills it. */
+  .card-link {
+    @apply text-inherit no-underline transition-colors;
+
+    &::after {
+      @apply absolute inset-0 z-[1] rounded-2xl content-[''];
+    }
+
+    &:focus-visible {
+      @apply outline-none;
+    }
+
+    &:focus-visible::after {
+      @apply outline-2 outline-offset-4 outline-circuit;
+    }
+  }
+
+  .card:hover .card-link {
+    @apply text-circuit;
+  }
+
+  /* Front-page preview. Collapsed at rest, it opens on the same curve and
+     timing as the lift, so the card rises and reveals together, then closes
+     with the drop. Animating grid rows from 0fr to 1fr opens it to the
+     image's natural height without measuring it. */
+  .cover {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-rows 0.34s var(--ease-drop),
+      opacity 0.2s ease-in,
+      margin 0.34s var(--ease-drop);
+
+    > div {
+      @apply relative min-h-0 overflow-hidden rounded-xl;
+    }
+
+    img {
+      @apply block aspect-[16/10] w-full rounded-xl border border-line object-cover object-top;
+      transform: translateY(10px) scale(0.97);
+      transition: transform 0.34s var(--ease-drop);
+    }
+  }
+
+  .cover-label {
+    @apply absolute bottom-2 left-2 rounded-full bg-ink/85 px-2.5 py-1 font-mono text-[0.65rem] tracking-widest text-white/80 uppercase backdrop-blur-sm;
+  }
+
+  /* Raised: hover with a mouse, or keyboard focus anywhere in the card. */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .card:hover .cover,
+    .card:focus-within .cover {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      @apply mb-4;
+      transition:
+        grid-template-rows 0.6s var(--ease-lift),
+        opacity 0.35s ease-out 0.1s,
+        margin 0.6s var(--ease-lift);
+
+      img {
+        transform: none;
+        transition: transform 0.6s var(--ease-lift);
+      }
+    }
+  }
+
+  /* No hover on touch screens, and no motion when it's reduced: the preview
+     simply stays open as the card's cover image. */
+  @media (hover: none), (prefers-reduced-motion: reduce) {
+    .cover {
+      @apply mb-4;
+      grid-template-rows: 1fr;
+      opacity: 1;
+      transition: none;
+
+      img {
+        transform: none;
+        transition: none;
+      }
+    }
+  }
+
+  /* Secondary actions sit above the stretched link. */
+  .repo-link,
+  .preview-btn {
+    @apply relative z-[2];
+  }
+
+  .repo-link {
     @apply mt-5 inline-block py-1 text-sm font-semibold underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white;
   }
 }
@@ -289,6 +494,17 @@ nav {
 
     a {
       @apply rounded-full border border-white/40 px-7 py-3 font-semibold transition-colors hover:border-white hover:bg-white hover:text-black;
+      /* Press squish. Uses the standalone scale property, so it never
+         clashes with the magnetic pull GSAP applies to transform. */
+      transition-property: color, background-color, border-color, scale;
+      transition-duration: 0.15s, 0.15s, 0.15s, 0.45s;
+      transition-timing-function: ease, ease, ease, var(--ease-spring);
+    }
+
+    a:active {
+      scale: 0.95;
+      transition-duration: 0.15s, 0.15s, 0.15s, 0.08s;
+      transition-timing-function: ease, ease, ease, ease-out;
     }
 
     a:last-child {
