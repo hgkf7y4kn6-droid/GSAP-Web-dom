@@ -7,11 +7,17 @@ import { attachTilt } from "../lib/weight";
 import { lovedProjects, projectLists } from "../../constants/index.js";
 
 // Interleave the two lists so the cards alternate left and right beside the
-// computer: popular, loved, popular, loved...
-const projects = projectLists.flatMap((popular, i) => [
-  { ...popular, category: "Most popular" },
-  ...(lovedProjects[i] ? [{ ...lovedProjects[i], category: "Most loved" }] : []),
-]);
+// computer: popular, loved, popular, loved... When one list is longer, its
+// extra projects follow at the end rather than being dropped.
+const projects = Array.from(
+  { length: Math.max(projectLists.length, lovedProjects.length) },
+  (_, i) => [
+    projectLists[i] && { ...projectLists[i], category: "Most popular" },
+    lovedProjects[i] && { ...lovedProjects[i], category: "Most loved" },
+  ],
+)
+  .flat()
+  .filter(Boolean);
 
 const Projects = () => {
   const ref = useRef();
@@ -131,10 +137,30 @@ const Projects = () => {
             metrics = [],
             stack = [],
             preview = false,
+            cover,
           }) => (
             <li key={name}>
               <div className="float">
                 <article className="card weighted glow-frames">
+                  {/* Front-page preview: opens as the card lifts on hover or
+                      keyboard focus; always shown on touch screens. */}
+                  {cover && (
+                    <div className="cover">
+                      <div>
+                        <img
+                          src={cover}
+                          alt={`Preview of the ${name} ${site ? "website" : "repository"}`}
+                          width="960"
+                          height="600"
+                          decoding="async"
+                          fetchPriority="low"
+                        />
+                        <span className="cover-label">
+                          {site ? "Live site" : "Repository"}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                   <p className="category">{category}</p>
                   <h3>
                     {/* Stretched link: its ::after covers the whole card, so a

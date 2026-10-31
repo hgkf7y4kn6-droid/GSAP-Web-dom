@@ -47,6 +47,7 @@ const projectLists = [
     summary:
       "Multi-agent healthcare assistant that handles prescription refills, EHR lookups, scheduling and support tickets. Python, CrewAI and a webhook API.",
     repo: "https://github.com/hgkf7y4kn6-droid/Capstone-Healthcare-Agent",
+    cover: "/images/previews/capstone-healthcare-agent.jpg",
   },
 ];
 
@@ -59,6 +60,7 @@ const lovedProjects = [
     summary:
       "Good / better / best product matching that compares options on cost per use. FastAPI with CLIP, FAISS and OCR, deployed on Render and Cloudflare.",
     repo: "https://github.com/hgkf7y4kn6-droid/Cost-Comparison-Tool",
+    cover: "/images/previews/cost-comparison-tool.jpg",
   },
   {
     name: "Pool PM",
@@ -82,6 +84,20 @@ const lovedProjects = [
     summary:
       "Personal news reader across 62 sources with an AI chat assistant that answers with citations. Cloudflare Workers, Vectorize and Gemini.",
     repo: "https://github.com/hgkf7y4kn6-droid/news-agent",
+    cover: "/images/previews/news-agent.jpg",
+  },
+  {
+    name: "Misadventures of Havoc and Chaos",
+    problem: "AI party games break when the model, not the game, makes the rules.",
+    stack: ["Python", "FastAPI", "React", "Cloudflare Workers", "Expo"],
+    metrics: [
+      { value: "2–12", label: "Players per game" },
+      { value: "14", label: "Specialised narrative services" },
+    ],
+    summary:
+      "Real-time multiplayer storytelling game: players vote on a premise, make secret choices that collide, and get the whole adventure back as one narrated story. The server owns every rule; the AI only writes.",
+    repo: "https://github.com/hgkf7y4kn6-droid/Misadventures-of-Havoc-and-Chaos",
+    cover: "/images/previews/misadventures-of-havoc-and-chaos.jpg",
   },
 ];
 

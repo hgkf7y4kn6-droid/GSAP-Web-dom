@@ -349,6 +349,69 @@ nav {
     @apply text-circuit;
   }
 
+  /* Front-page preview. Collapsed at rest, it opens on the same curve and
+     timing as the lift, so the card rises and reveals together, then closes
+     with the drop. Animating grid rows from 0fr to 1fr opens it to the
+     image's natural height without measuring it. */
+  .cover {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-rows 0.34s var(--ease-drop),
+      opacity 0.2s ease-in,
+      margin 0.34s var(--ease-drop);
+
+    > div {
+      @apply relative min-h-0 overflow-hidden rounded-xl;
+    }
+
+    img {
+      @apply block aspect-[16/10] w-full rounded-xl border border-line object-cover object-top;
+      transform: translateY(10px) scale(0.97);
+      transition: transform 0.34s var(--ease-drop);
+    }
+  }
+
+  .cover-label {
+    @apply absolute bottom-2 left-2 rounded-full bg-ink/85 px-2.5 py-1 font-mono text-[0.65rem] tracking-widest text-white/80 uppercase backdrop-blur-sm;
+  }
+
+  /* Raised: hover with a mouse, or keyboard focus anywhere in the card. */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .card:hover .cover,
+    .card:focus-within .cover {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      @apply mb-4;
+      transition:
+        grid-template-rows 0.6s var(--ease-lift),
+        opacity 0.35s ease-out 0.1s,
+        margin 0.6s var(--ease-lift);
+
+      img {
+        transform: none;
+        transition: transform 0.6s var(--ease-lift);
+      }
+    }
+  }
+
+  /* No hover on touch screens, and no motion when it's reduced: the preview
+     simply stays open as the card's cover image. */
+  @media (hover: none), (prefers-reduced-motion: reduce) {
+    .cover {
+      @apply mb-4;
+      grid-template-rows: 1fr;
+      opacity: 1;
+      transition: none;
+
+      img {
+        transform: none;
+        transition: none;
+      }
+    }
+  }
+
   /* Secondary actions sit above the stretched link. */
   .repo-link,
   .preview-btn {
