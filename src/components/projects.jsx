@@ -4,14 +4,7 @@ import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "react-responsive";
 import PreviewFlyout from "./preview-flyout";
 import { useMagnetic } from "../hooks/useMagnetic";
-import { lovedProjects, projectLists } from "../../constants/index.js";
-
-// Interleave the two lists so the cards alternate left and right beside the
-// computer: popular, loved, popular, loved...
-const projects = projectLists.flatMap((popular, i) => [
-  { ...popular, category: "Most popular" },
-  ...(lovedProjects[i] ? [{ ...lovedProjects[i], category: "Most loved" }] : []),
-]);
+import { projects } from "../../constants/index.js";
 
 const Projects = () => {
   const prefersReducedMotion = useMediaQuery({
@@ -54,7 +47,7 @@ const Projects = () => {
             name,
             summary,
             url,
-            category,
+            status,
             problem,
             metrics = [],
             stack = [],
@@ -63,7 +56,7 @@ const Projects = () => {
           }) => (
             <li key={name}>
               <article className="card glow-frames">
-                <p className="category">{category}</p>
+                <p className="category">{status}</p>
                 <h3>{name}</h3>
                 {problem && <p className="problem">{problem}</p>}
                 <p className="summary">{summary}</p>
