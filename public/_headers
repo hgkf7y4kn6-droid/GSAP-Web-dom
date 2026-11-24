@@ -1,0 +1,9 @@
+# Security headers for every page. Read by Cloudflare Pages and Netlify; other hosts ignore
+# this file. No script-src rules: the site's inline Astro scripts and WebGL keep working.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'; base-uri 'self'; object-src 'none'; form-action 'self'
